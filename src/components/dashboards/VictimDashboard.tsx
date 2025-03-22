@@ -66,7 +66,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
     <div className="w-full">
       <div className="w-full px-4 sm:px-6 md:px-8 mb-6">
         <AnimatedTransition>
-          <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 transition-transform duration-300 hover:scale-[1.02]">
+          <div className="relative overflow-hidden glass-dark rounded-2xl border border-white/10 p-4 sm:p-6 transition-all duration-300 hover:scale-105">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between">
               <div className="mb-4 sm:mb-0 sm:mr-6">
                 <div className="mb-2">
@@ -82,10 +82,10 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               </div>
               
               <div className="flex space-x-2">
-                <Link to="/resources" className="px-4 py-2 rounded-full text-sm bg-white text-black hover:bg-white/90 transition-colors">
+                <Link to="/resources" className="px-4 py-2 rounded-full text-sm bg-white text-black hover:bg-white/90 transition-all duration-300 hover:scale-105">
                   Request Help
                 </Link>
-                <Link to="/shelter-map" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-colors">
+                <Link to="/shelter-map" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-all duration-300 hover:scale-105">
                   Find Shelter
                 </Link>
               </div>
@@ -99,7 +99,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
           <AnimatedTransition className="mb-6" delay={100}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Available Resources</h2>
-              <Link to="/resources" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
+              <Link to="/resources" className="flex items-center text-sm text-gray-400 hover:text-white transition-all duration-300 hover:scale-105">
                 <span className="mr-1">View All</span>
                 <ArrowRight size={14} />
               </Link>
@@ -109,12 +109,12 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               {loading ? (
                 // Show loading states
                 Array(4).fill(0).map((_, index) => (
-                  <div key={`loading-${index}`} className="animate-pulse rounded-xl p-6 bg-white/5 h-64"></div>
+                  <div key={`loading-${index}`} className="animate-pulse rounded-2xl p-6 bg-white/5 h-64"></div>
                 ))
               ) : availableResources.length > 0 ? (
                 // Show available resources
                 availableResources.map(resource => (
-                  <div key={resource.id} className="bg-[#222222] backdrop-blur-sm border border-white/5 shadow-lg transition-transform duration-300 hover:scale-[1.03]">
+                  <div key={resource.id} className="transition-all duration-300 hover:scale-[1.03]">
                     <ResourceCard
                       key={resource.id}
                       type="offer"
@@ -133,7 +133,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
                 ))
               ) : (
                 // No resources available
-                <div className="col-span-2 p-6 border border-white/10 rounded-xl text-center">
+                <div className="col-span-2 p-6 border border-white/10 rounded-2xl text-center">
                   <p className="text-gray-400">No resources available at the moment.</p>
                 </div>
               )}
@@ -173,7 +173,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
           <AnimatedTransition delay={200}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">Status Updates</h2>
-              <Link to="/alerts" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
+              <Link to="/alerts" className="flex items-center text-sm text-gray-400 hover:text-white transition-all duration-300 hover:scale-105">
                 <span className="mr-1">View All</span>
                 <ArrowRight size={14} />
               </Link>
@@ -207,7 +207,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               <h2 className="text-xl font-semibold">Emergency Contacts</h2>
               <button 
                 onClick={() => setShowAllContacts(true)}
-                className="flex items-center text-sm text-gray-400 hover:text-white transition-colors"
+                className="flex items-center text-sm text-gray-400 hover:text-white transition-all duration-300 hover:scale-105"
               >
                 <span className="mr-1">View All</span>
                 <ArrowRight size={14} />

@@ -390,7 +390,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   return (
     <div 
       className={cn(
-        'relative overflow-hidden rounded-xl backdrop-blur-sm transition-all duration-300 hover:shadow-lg',
+        'relative overflow-hidden rounded-2xl backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:scale-105',
         isLight
           ? (type === 'need' 
               ? 'border border-gray-300 bg-white shadow-soft' 
@@ -414,7 +414,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
       <div className="p-5">
         <div className="flex items-center mb-4">
           <div className={cn(
-            'p-2 rounded-full mr-3',
+            'p-2 rounded-full mr-3 transition-transform hover:scale-110',
             isLight
               ? (type === 'need' ? 'bg-gray-200' : 'bg-gray-300')
               : (type === 'need' ? 'bg-black/60' : 'bg-white/10')
@@ -453,7 +453,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
             variant="ghost"
             size="sm"
             className={cn(
-              "flex items-center text-xs",
+              "flex items-center text-xs transition-transform hover:scale-105",
               isLight ? "text-gray-600 hover:text-gray-900" : "text-gray-400 hover:text-white"
             )}
           >
@@ -500,7 +500,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
               onClick={handleRequestClick}
               disabled={isRequesting}
               className={cn(
-                "flex items-center text-sm font-medium py-1.5 px-3 rounded-full transition-colors focus-ring disabled:opacity-50",
+                "flex items-center text-sm font-medium py-1.5 px-3 rounded-full transition-all duration-300 focus-ring disabled:opacity-50 hover:scale-105",
                 isLight
                   ? "bg-black text-white hover:bg-black/90"
                   : "bg-white/10 hover:bg-white/15"
@@ -522,7 +522,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
 
       <Dialog open={showDetails} onOpenChange={setShowDetails}>
         <DialogContent className={cn(
-          "sm:max-w-md",
+          "sm:max-w-md rounded-2xl transition-transform",
           isLight ? "bg-white text-black" : "bg-black border border-white/10 text-white"
         )}>
           <DialogHeader>
