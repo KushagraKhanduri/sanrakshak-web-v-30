@@ -12,8 +12,10 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       <textarea
         className={cn(
           "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          // Add autofill styles for both light and dark themes
-          "[&:-webkit-autofill]:shadow-[0_0_0_1000px_transparent_inset] [&:-webkit-autofill]:text-fill-foreground dark:[&:-webkit-autofill]:shadow-[0_0_0_1000px_transparent_inset] dark:[&:-webkit-autofill]:text-fill-foreground",
+          // Improved autofill styles for both light and dark themes
+          "[&:-webkit-autofill]:bg-transparent [&:-webkit-autofill]:text-inherit",
+          "[&:-webkit-autofill]:!bg-background/5 [&:-webkit-autofill]:shadow-[0_0_0_100px_var(--background)_inset]",
+          "dark:[&:-webkit-autofill]:shadow-[0_0_0_100px_#000_inset] dark:[&:-webkit-autofill]:text-white",
           className
         )}
         ref={ref}

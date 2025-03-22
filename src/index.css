@@ -69,6 +69,46 @@
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
   }
+
+  /* Add explicit autofill styles for light and dark mode */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: inherit;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .dark-mode input:-webkit-autofill,
+  .dark-mode input:-webkit-autofill:hover,
+  .dark-mode input:-webkit-autofill:focus,
+  .dark-mode textarea:-webkit-autofill,
+  .dark-mode textarea:-webkit-autofill:hover,
+  .dark-mode textarea:-webkit-autofill:focus,
+  .dark-mode select:-webkit-autofill,
+  .dark-mode select:-webkit-autofill:hover,
+  .dark-mode select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px #000 inset !important;
+    -webkit-text-fill-color: white !important;
+  }
+
+  .light-mode input:-webkit-autofill,
+  .light-mode input:-webkit-autofill:hover,
+  .light-mode input:-webkit-autofill:focus,
+  .light-mode textarea:-webkit-autofill,
+  .light-mode textarea:-webkit-autofill:hover,
+  .light-mode textarea:-webkit-autofill:focus,
+  .light-mode select:-webkit-autofill,
+  .light-mode select:-webkit-autofill:hover,
+  .light-mode select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
 }
 
 @layer base {
