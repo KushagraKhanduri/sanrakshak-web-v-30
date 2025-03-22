@@ -8,9 +8,9 @@ import BackButton from '@/components/BackButton';
 
 const RecoveryPlan = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full bg-background">
       <Header />
-      <div className="container mx-auto px-4 py-8">
+      <div className="w-full px-4 sm:px-6 md:px-8 py-8">
         <AnimatedTransition>
           <div className="mt-16 mb-4"> {/* Added mt-16 to add top margin and prevent overlap with header */}
             <BackButton />

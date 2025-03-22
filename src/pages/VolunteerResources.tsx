@@ -116,12 +116,12 @@ const VolunteerResources = () => {
   };
   
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen w-full bg-black text-white">
       <Header title="Volunteer Resources" />
       
       <AnimatedTransition>
-        <main className="pt-20 pb-16 min-h-screen">
-          <div className="container mx-auto px-4">
+        <main className="pt-20 pb-16 min-h-screen w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8">
             <div className="mb-4">
               <BackButton />
             </div>

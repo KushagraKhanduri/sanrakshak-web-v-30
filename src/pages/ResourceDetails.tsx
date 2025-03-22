@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
@@ -87,11 +88,11 @@ const ResourceDetails = () => {
   };
   
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen w-full bg-black text-white">
       <Header emergency={true} />
       
-      <main className="pt-20 pb-16">
-        <div className="container mx-auto px-4 max-w-4xl">
+      <main className="pt-20 pb-16 w-full">
+        <div className="w-full px-4 sm:px-6 md:px-8 max-w-4xl mx-auto">
           <div className="mb-6">
             <Link to="/resources" className="flex items-center text-gray-400 hover:text-white transition-colors mb-4">
               <ArrowLeft size={16} className="mr-2" />

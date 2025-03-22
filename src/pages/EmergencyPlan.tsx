@@ -7,11 +7,11 @@ import BackButton from '../components/BackButton';
 
 const EmergencyPlan = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen w-full bg-black text-white">
       <Header emergency={true} />
       
-      <main className="pt-20 pb-16">
-        <div className="container mx-auto px-4">
+      <main className="pt-20 pb-16 w-full">
+        <div className="w-full px-4 sm:px-6 md:px-8">
           <BackButton className="mb-4" />
           
           <div className="mb-8">

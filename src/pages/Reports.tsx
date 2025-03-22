@@ -9,8 +9,8 @@ const Reports = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen w-full bg-black text-white">
+      <div className="w-full px-4 sm:px-6 md:px-8 py-8">
         <div className="mb-6">
           <Button 
             variant="ghost" 

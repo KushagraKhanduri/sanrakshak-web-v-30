@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -100,7 +101,7 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen w-full bg-background text-foreground">
         <Header />
         <div className="pt-20 flex items-center justify-center min-h-screen">
           <div className="animate-pulse flex flex-col items-center">
@@ -115,7 +116,7 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen w-full bg-background text-foreground">
         <Header />
         <div className="pt-20 flex items-center justify-center min-h-screen">
           <div className="text-center">
@@ -134,11 +135,11 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen w-full bg-black text-white">
       <Header />
       
-      <main className="pt-20 pb-16">
-        <div className="container mx-auto px-4">
+      <main className="pt-20 pb-16 w-full">
+        <div className="w-full px-4 sm:px-6 md:px-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold tracking-tight">My Profile</h1>
             <p className="text-gray-400 mt-1">Manage your account and view your activity</p>
