@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { MapPin, Compass, Search } from 'lucide-react';
@@ -82,6 +83,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
     navigate('/map', { state: { selectedLocationId: locationId } });
   };
 
+  // Use mapResources if provided, otherwise use sample locations
   const locationsToDisplay = mapResources 
     ? mapResources.map(resource => ({
         id: resource.id.toString(),
@@ -111,7 +113,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
 
   return (
     <div className={cn(
-      'rounded-2xl overflow-hidden border transition-all duration-300 hover:scale-105',
+      'rounded-xl overflow-hidden border',
       isLight ? 'bg-white border-gray-300 shadow-soft' : 'glass-dark',
       className
     )}>
@@ -137,7 +139,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
           <button 
             onClick={handleGetLocation}
             className={cn(
-              "flex items-center justify-center transition-all duration-300 rounded-r-lg px-4 hover:scale-105",
+              "flex items-center justify-center transition-colors rounded-r-lg px-4",
               isLight 
                 ? "bg-gray-200 hover:bg-gray-300 border border-gray-300 border-l-0" 
                 : "bg-white/10 hover:bg-white/15"
@@ -167,7 +169,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
             <div 
               key={location.id}
               className={cn(
-                'rounded-xl p-3 transition-all duration-300 border hover:scale-105',
+                'rounded-lg p-3 transition-all border',
                 isLight
                   ? (location.available 
                       ? 'bg-white border-gray-300 hover:bg-gray-50' 
@@ -202,11 +204,11 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
                 </span>
                 <button 
                   className={cn(
-                    'text-xs rounded-full px-3 py-1 transition-all duration-300',
+                    'text-xs rounded-full px-3 py-1',
                     location.available
                       ? (isLight 
-                          ? 'bg-black text-white hover:bg-black/90 hover:scale-105' 
-                          : 'bg-white/10 hover:bg-white/15 hover:scale-105')
+                          ? 'bg-black text-white hover:bg-black/90' 
+                          : 'bg-white/10 hover:bg-white/15')
                       : (isLight 
                           ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
                           : 'bg-black/30 text-gray-500 cursor-not-allowed')
