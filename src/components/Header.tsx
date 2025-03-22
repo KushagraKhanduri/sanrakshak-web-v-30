@@ -139,7 +139,7 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header 
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 py-4 px-6 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300',
         scrolled 
           ? isLight 
             ? 'backdrop-blur-xl bg-white/50 shadow-sm border-b border-gray-200' 
@@ -147,7 +147,7 @@ const Header: React.FC<HeaderProps> = ({
           : 'bg-transparent'
       )}
     >
-      <div className="container mx-auto">
+      <div className="w-full px-4 sm:px-6 md:px-8">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             {emergency && (
