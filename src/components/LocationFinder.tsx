@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { MapPin, Compass, Search } from 'lucide-react';
@@ -111,7 +112,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
 
   return (
     <div className={cn(
-      'rounded-2xl overflow-hidden border transition-transform duration-300 hover:scale-[1.02]',
+      'rounded-2xl overflow-hidden border',
       isLight ? 'bg-white border-gray-300 shadow-soft' : 'glass-dark',
       className
     )}>
@@ -168,7 +169,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
             <div 
               key={location.id}
               className={cn(
-                'rounded-xl p-3 transition-all duration-300 border hover:scale-105',
+                'rounded-xl p-3 transition-all duration-300 border',
                 isLight
                   ? (location.available 
                       ? 'bg-white border-gray-300 hover:bg-gray-50' 
