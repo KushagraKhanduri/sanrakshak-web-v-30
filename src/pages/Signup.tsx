@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from "@/hooks/use-toast";
@@ -5,6 +6,8 @@ import AnimatedTransition from '@/components/AnimatedTransition';
 import { Lock, Mail, User, ArrowRight, UserCheck, Building, UserCog, Shield } from 'lucide-react';
 import { useTheme } from '../context/ThemeProvider';
 import BackButton from '@/components/BackButton';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -170,14 +173,14 @@ const Signup = () => {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <User size={18} className={isLight ? "text-gray-500" : "text-gray-400"} />
                   </div>
-                  <input
+                  <Input
                     id="name"
                     type="text"
                     placeholder="John Doe"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 focus:ring-1 focus:outline-none`}
+                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} pl-10`}
                   />
                 </div>
               </div>
@@ -190,14 +193,14 @@ const Signup = () => {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Mail size={18} className={isLight ? "text-gray-500" : "text-gray-400"} />
                   </div>
-                  <input
+                  <Input
                     id="email"
                     type="email"
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 focus:ring-1 focus:outline-none`}
+                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} pl-10`}
                   />
                 </div>
               </div>
@@ -210,7 +213,7 @@ const Signup = () => {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Lock size={18} className={isLight ? "text-gray-500" : "text-gray-400"} />
                   </div>
-                  <input
+                  <Input
                     id="password"
                     type="password"
                     placeholder="••••••••"
@@ -218,7 +221,7 @@ const Signup = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={8}
-                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 focus:ring-1 focus:outline-none`}
+                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} pl-10`}
                   />
                 </div>
               </div>
@@ -231,14 +234,14 @@ const Signup = () => {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Lock size={18} className={isLight ? "text-gray-500" : "text-gray-400"} />
                   </div>
-                  <input
+                  <Input
                     id="confirmPassword"
                     type="password"
                     placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 focus:ring-1 focus:outline-none`}
+                    className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} pl-10`}
                   />
                 </div>
               </div>
@@ -255,7 +258,7 @@ const Signup = () => {
                     id="role"
                     value={role}
                     onChange={handleRoleChange}
-                    className={`w-full ${isLight ? "bg-white border-gray-300 focus:ring-gray-400" : "bg-black/40 border-white/10 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 appearance-none focus:ring-1 focus:outline-none`}
+                    className={`w-full ${isLight ? "bg-white border-gray-300 focus:ring-gray-400" : "bg-black/40 border-white/10 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 appearance-none focus:ring-1 focus:outline-none [&:-webkit-autofill]:shadow-[0_0_0_1000px_transparent_inset] [&:-webkit-autofill]:text-fill-foreground`}
                   >
                     <option value="victim">Someone affected by disaster</option>
                     <option value="volunteer">A volunteer</option>
@@ -281,21 +284,21 @@ const Signup = () => {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <Shield size={18} className={isLight ? "text-gray-500" : "text-gray-400"} />
                     </div>
-                    <input
+                    <Input
                       id="adminCode"
                       type="password"
                       placeholder="Enter admin code"
                       value={adminCode}
                       onChange={(e) => setAdminCode(e.target.value)}
                       required={role === 'admin'}
-                      className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} border rounded-lg py-3 pl-10 pr-4 focus:ring-1 focus:outline-none`}
+                      className={`w-full ${isLight ? "bg-white border-gray-300 placeholder:text-gray-400 focus:ring-gray-400" : "bg-black/40 border-white/10 placeholder:text-gray-500 focus:ring-white/30"} pl-10`}
                     />
                   </div>
                   <p className={`mt-1 text-xs ${isLight ? "text-gray-600" : "text-gray-400"}`}>Contact system administrator for this code</p>
                 </div>
               )}
               
-              <button
+              <Button
                 type="submit"
                 disabled={isLoading}
                 className={`w-full rounded-lg font-medium py-3 flex items-center justify-center transition-colors disabled:opacity-50 ${isLight ? "bg-black text-white hover:bg-gray-800" : "bg-white text-black hover:bg-white/90"}`}
@@ -311,7 +314,7 @@ const Signup = () => {
                     <ArrowRight size={16} className="ml-1" />
                   </span>
                 )}
-              </button>
+              </Button>
               
               <div className="text-center text-sm text-gray-400">
                 <span>Already have an account? </span>

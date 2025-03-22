@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { MapPin, Compass, Search } from 'lucide-react';
@@ -83,7 +82,6 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
     navigate('/map', { state: { selectedLocationId: locationId } });
   };
 
-  // Use mapResources if provided, otherwise use sample locations
   const locationsToDisplay = mapResources 
     ? mapResources.map(resource => ({
         id: resource.id.toString(),
@@ -113,7 +111,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
 
   return (
     <div className={cn(
-      'rounded-xl overflow-hidden border',
+      'rounded-2xl overflow-hidden border transition-transform duration-300 hover:scale-[1.02]',
       isLight ? 'bg-white border-gray-300 shadow-soft' : 'glass-dark',
       className
     )}>
@@ -129,7 +127,8 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={cn(
-                "w-full rounded-l-lg py-2 pl-9 pr-3 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-1",
+                "w-full rounded-l-lg py-2 pl-9 pr-3 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-1 transition-all duration-200",
+                "[&:-webkit-autofill]:shadow-[0_0_0_1000px_transparent_inset] [&:-webkit-autofill]:text-fill-foreground",
                 isLight 
                   ? "bg-gray-100 border border-gray-300 focus:ring-gray-400" 
                   : "bg-white/5 border border-white/10 focus:ring-white/20"
@@ -139,7 +138,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
           <button 
             onClick={handleGetLocation}
             className={cn(
-              "flex items-center justify-center transition-colors rounded-r-lg px-4",
+              "flex items-center justify-center transition-all duration-200 rounded-r-lg px-4 hover:scale-105",
               isLight 
                 ? "bg-gray-200 hover:bg-gray-300 border border-gray-300 border-l-0" 
                 : "bg-white/10 hover:bg-white/15"
@@ -169,7 +168,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
             <div 
               key={location.id}
               className={cn(
-                'rounded-lg p-3 transition-all border',
+                'rounded-xl p-3 transition-all duration-300 border hover:scale-105',
                 isLight
                   ? (location.available 
                       ? 'bg-white border-gray-300 hover:bg-gray-50' 
@@ -204,11 +203,11 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
                 </span>
                 <button 
                   className={cn(
-                    'text-xs rounded-full px-3 py-1',
+                    'text-xs rounded-full px-3 py-1 transition-all duration-200',
                     location.available
                       ? (isLight 
-                          ? 'bg-black text-white hover:bg-black/90' 
-                          : 'bg-white/10 hover:bg-white/15')
+                          ? 'bg-black text-white hover:bg-black/90 hover:scale-105' 
+                          : 'bg-white/10 hover:bg-white/15 hover:scale-105')
                       : (isLight 
                           ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
                           : 'bg-black/30 text-gray-500 cursor-not-allowed')
@@ -224,7 +223,7 @@ const LocationFinder: React.FC<LocationFinderProps> = ({ className, mapResources
           
           {filteredLocations.length === 0 && (
             <div className={cn(
-              "text-center py-6 text-sm border rounded-lg",
+              "text-center py-6 text-sm border rounded-xl",
               isLight ? "text-gray-600 border-gray-300 bg-gray-50" : "text-gray-400 border-white/5 bg-black/20"
             )}>
               No locations found matching your search.
