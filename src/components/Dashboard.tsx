@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import VictimDashboard from './dashboards/VictimDashboard';
 import VolunteerDashboard from './dashboards/VolunteerDashboard';
@@ -142,7 +143,7 @@ const Dashboard: React.FC = () => {
   };
   
   return (
-    <div className="container mx-auto px-4">
+    <div className="w-full px-4 sm:px-6 md:px-8">
       <EmergencyAlert />
       {renderDashboardByRole()}
     </div>

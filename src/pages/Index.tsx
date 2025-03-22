@@ -28,7 +28,7 @@ const Index = () => {
       </main>
       
       <footer className={`py-6 w-full ${isLight ? "border-t border-gray-200 backdrop-blur-sm bg-white/30" : "border-t border-border backdrop-blur-sm bg-background/30"}`}>
-        <div className="w-full px-4 sm:px-6 md:px-8 mx-auto">
+        <div className="w-full px-4 sm:px-6 md:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-center md:text-left mb-4 md:mb-0">
               <span className="text-sm text-muted-foreground">
