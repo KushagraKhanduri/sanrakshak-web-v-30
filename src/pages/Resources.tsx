@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import Header from '../components/Header';
 import ResourceCard from '../components/ResourceCard';
@@ -297,6 +298,7 @@ const Resources = () => {
                     urgent={resource.urgent}
                     requestId={resource.id}
                     isRequested={user?.id && respondedRequestIds.has(resource.id)}
+                    className="rounded-2xl"
                   />
                 </div>
               ))}

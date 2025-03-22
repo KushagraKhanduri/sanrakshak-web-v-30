@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useEffect } from 'react';
 import { Info, ArrowRight } from 'lucide-react';
 import ResourceCard from '../ResourceCard';
@@ -15,12 +14,10 @@ interface VictimDashboardProps {
 }
 
 const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
-  // Use passed resourceData or create a new instance
   const { resources, responses, loading } = resourceData || useResourceData();
   const [user, setUser] = useState<any>(null);
   const [showAllContacts, setShowAllContacts] = useState(false);
   
-  // Get current user to check responses
   useEffect(() => {
     const storedUser = localStorage.getItem('authUser');
     if (storedUser) {
@@ -28,7 +25,6 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
     }
   }, []);
   
-  // Get a set of all resource IDs that the current user has already responded to
   const respondedRequestIds = useMemo(() => {
     if (!user?.id) return new Set<string>();
     
@@ -36,20 +32,17 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
     return new Set(userResponses.map((response: any) => response.requestId));
   }, [user, responses]);
   
-  // Filter resources to only show offers (available to victims)
   const availableResources = useMemo(() => {
     return resources
       .filter(resource => resource.type === 'offer')
       .sort((a, b) => {
-        // Sort by urgent first, then by timestamp (newest first)
         if (a.urgent && !b.urgent) return -1;
         if (!a.urgent && b.urgent) return 1;
         return b.timestamp - a.timestamp;
       })
-      .slice(0, 4); // Only show the top 4
+      .slice(0, 4);
   }, [resources]);
   
-  // Filter resources to show the victim's own requests
   const myRequests = useMemo(() => {
     if (!user?.id) return [];
     
@@ -59,7 +52,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         resource.userId === user.id
       )
       .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, 2); // Only show the top 2
+      .slice(0, 2);
   }, [resources, user]);
   
   return (
@@ -107,40 +100,35 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {loading ? (
-                // Show loading states
                 Array(4).fill(0).map((_, index) => (
-                  <div key={`loading-${index}`} className="animate-pulse rounded-xl p-6 bg-white/5 h-64"></div>
+                  <div key={`loading-${index}`} className="animate-pulse rounded-2xl p-6 bg-white/5 h-64"></div>
                 ))
               ) : availableResources.length > 0 ? (
-                // Show available resources
                 availableResources.map(resource => (
-                  <div key={resource.id} className="bg-[#222222] backdrop-blur-sm border border-white/5 shadow-lg transition-transform duration-300 hover:scale-[1.03]">
-                    <ResourceCard
-                      key={resource.id}
-                      type="offer"
-                      category={resource.category}
-                      title={resource.title}
-                      description={resource.description}
-                      location={resource.location}
-                      locationDetails={resource.locationDetails}
-                      contact={resource.contact}
-                      contactName={resource.contactName}
-                      urgent={resource.urgent}
-                      requestId={resource.id}
-                      isRequested={user?.id && user.role === 'victim' && respondedRequestIds.has(resource.id)}
-                    />
-                  </div>
+                  <ResourceCard
+                    key={resource.id}
+                    type="offer"
+                    category={resource.category}
+                    title={resource.title}
+                    description={resource.description}
+                    location={resource.location}
+                    locationDetails={resource.locationDetails}
+                    contact={resource.contact}
+                    contactName={resource.contactName}
+                    urgent={resource.urgent}
+                    requestId={resource.id}
+                    isRequested={user?.id && user.role === 'victim' && respondedRequestIds.has(resource.id)}
+                    className="rounded-2xl"
+                  />
                 ))
               ) : (
-                // No resources available
-                <div className="col-span-2 p-6 border border-white/10 rounded-xl text-center">
+                <div className="col-span-2 p-6 border border-white/10 rounded-2xl text-center">
                   <p className="text-gray-400">No resources available at the moment.</p>
                 </div>
               )}
             </div>
           </AnimatedTransition>
           
-          {/* Show My Request Section if user has requests */}
           {myRequests.length > 0 && (
             <AnimatedTransition className="mb-6" delay={150}>
               <div className="flex items-center justify-between mb-4">
@@ -163,7 +151,8 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
                     contact={resource.contact}
                     urgent={resource.urgent}
                     requestId={resource.id}
-                    isRequested={true} // Always mark as requested since these are the user's own requests
+                    isRequested={true}
+                    className="rounded-2xl"
                   />
                 ))}
               </div>
@@ -239,7 +228,6 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         </div>
       </div>
       
-      {/* Emergency Contacts Dialog */}
       <EmergencyContactsDialog 
         open={showAllContacts} 
         onOpenChange={setShowAllContacts} 

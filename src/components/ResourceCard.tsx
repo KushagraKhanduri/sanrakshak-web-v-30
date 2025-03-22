@@ -361,7 +361,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   return (
     <div 
       className={cn(
-        'relative overflow-hidden rounded-2xl backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:rounded-2xl',
+        'relative overflow-hidden rounded-2xl backdrop-blur-sm transition-all duration-300 hover:shadow-lg',
         isLight
           ? (type === 'need' 
               ? 'border border-gray-300 bg-white shadow-soft' 
@@ -646,4 +646,3 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
 };
 
 export default ResourceCard;
-
