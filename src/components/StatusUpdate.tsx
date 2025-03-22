@@ -43,9 +43,9 @@ const StatusUpdate: React.FC<StatusUpdateProps> = ({
   return (
     <div 
       className={cn(
-        'rounded-lg overflow-hidden transition-all',
+        'rounded-2xl overflow-hidden transition-all',
         isLight 
-          ? 'bg-white border border-gray-300 shadow-soft' 
+          ? 'bg-white border border-gray-200' 
           : 'bg-black/30 backdrop-blur-sm border border-white/10',
         getPriorityStyles(),
         className

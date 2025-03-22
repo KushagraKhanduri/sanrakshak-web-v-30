@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import EmergencyContact from './EmergencyContact';
+import { useTheme } from '../context/ThemeProvider';
+import { cn } from '@/lib/utils';
 
 interface EmergencyContactsDialogProps {
   open: boolean;
@@ -20,6 +22,9 @@ const EmergencyContactsDialog: React.FC<EmergencyContactsDialogProps> = ({
   open,
   onOpenChange
 }) => {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   // Emergency contacts data (in a real app, this would come from an API or props)
   const contacts = [
     {
@@ -75,7 +80,10 @@ const EmergencyContactsDialog: React.FC<EmergencyContactsDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-hidden fixed">
+      <DialogContent className={cn(
+        "sm:max-w-[500px] max-h-[90vh] overflow-hidden fixed rounded-2xl",
+        isLight ? "bg-white" : "bg-black/30 backdrop-blur-sm border-white/10"
+      )}>
         <DialogHeader>
           <DialogTitle>Emergency Contacts</DialogTitle>
           <DialogDescription>

@@ -34,10 +34,10 @@ const EmergencyContact: React.FC<EmergencyContactProps> = ({
   return (
     <div 
       className={cn(
-        'rounded-xl border transition-all',
+        'rounded-2xl border transition-all',
         isLight 
           ? (available ? 'bg-white border-gray-200' : 'bg-gray-50 border-gray-200') 
-          : (available ? 'bg-black/30 border-white/10' : 'bg-black/20 border-white/5'),
+          : (available ? 'bg-black/30 backdrop-blur-sm border-white/10' : 'bg-black/20 border-white/5'),
         className
       )}
     >
