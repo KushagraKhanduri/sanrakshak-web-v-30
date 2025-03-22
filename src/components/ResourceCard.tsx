@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { ArrowRight, Droplet, Home, ShoppingBag, Utensils, Heart, Shield, CheckCircle, AlertTriangle, Info } from 'lucide-react';
@@ -47,7 +46,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   const { theme } = useTheme();
   const isLight = theme === 'light';
   
-  // This effect runs whenever the component mounts or requestId changes
   useEffect(() => {
     const checkUserResponses = () => {
       const authUser = localStorage.getItem('authUser');
@@ -56,19 +54,15 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
         setCurrentUser(user);
         
         if (requestId) {
-          // Only check for responses if the current user role matches the resource type
-          // Victims can request offers, volunteers/NGOs/government can respond to needs
           const shouldCheckResponses = 
             (user.role === 'victim' && type === 'offer') || 
             (['volunteer', 'ngo', 'government'].includes(user.role) && type === 'need');
           
           if (shouldCheckResponses) {
-            // Load response state from localStorage
             const userResponses = JSON.parse(localStorage.getItem(`responses_${user.id}`) || '[]');
             const hasAlreadyResponded = userResponses.some((response: any) => response.requestId === requestId);
             setHasResponded(hasAlreadyResponded);
           } else {
-            // If user role doesn't match resource type for interaction, they can't have responded
             setHasResponded(false);
           }
         } else {
@@ -77,10 +71,8 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
       }
     };
     
-    // Check if this request has already been responded to by any user
     const checkGlobalResponses = () => {
       if (requestId) {
-        // Check all responses in localStorage
         let anyoneResponded = false;
         for (let i = 0; i < localStorage.length; i++) {
           const key = localStorage.key(i);
@@ -103,7 +95,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
     checkUserResponses();
     checkGlobalResponses();
     
-    // Setup event listeners to update response status when changes happen
     const handleResponseUpdate = () => {
       checkUserResponses();
       checkGlobalResponses();
@@ -122,10 +113,8 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
     };
   }, [requestId, isRequested, type]);
   
-  // Update hasResponded when isRequested prop changes
   useEffect(() => {
     if (isRequested !== undefined) {
-      // Only apply isRequested if user role matches resource type
       if (currentUser) {
         const isUserRoleCompatible = 
           (currentUser.role === 'victim' && type === 'offer') || 
@@ -138,11 +127,9 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
     }
   }, [isRequested, currentUser, type]);
   
-  // Also check storage for response status on every page navigation
   useEffect(() => {
     const syncResponseState = () => {
       if (currentUser && requestId) {
-        // Only check if user role matches resource type for interaction
         const isUserRoleCompatible = 
           (currentUser.role === 'victim' && type === 'offer') || 
           (['volunteer', 'ngo', 'government'].includes(currentUser.role) && type === 'need');
@@ -156,30 +143,26 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
         }
       }
       
-      // Also check if any user has responded to this request
-      if (requestId) {
-        let anyoneResponded = false;
-        for (let i = 0; i < localStorage.length; i++) {
-          const key = localStorage.key(i);
-          if (key && key.startsWith('responses_')) {
-            try {
-              const responses = JSON.parse(localStorage.getItem(key) || '[]');
-              if (responses.some((response: any) => response.requestId === requestId)) {
-                anyoneResponded = true;
-                break;
-              }
-            } catch (error) {
-              console.error('Error checking responses:', error);
+      let anyoneResponded = false;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('responses_')) {
+          try {
+            const responses = JSON.parse(localStorage.getItem(key) || '[]');
+            if (responses.some((response: any) => response.requestId === requestId)) {
+              anyoneResponded = true;
+              break;
             }
+          } catch (error) {
+            console.error('Error checking responses:', error);
           }
         }
-        setIsAlreadyResponded(anyoneResponded);
       }
+      setIsAlreadyResponded(anyoneResponded);
     };
     
     syncResponseState();
     
-    // Listen for page navigations
     window.addEventListener('popstate', syncResponseState);
     
     return () => {
@@ -194,7 +177,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
       setCurrentUser(user);
       
       if (requestId) {
-        // Only check for responses if the current user role matches the resource type
         const shouldCheckResponses = 
           (user.role === 'victim' && type === 'offer') || 
           (['volunteer', 'ngo', 'government'].includes(user.role) && type === 'need');
@@ -207,7 +189,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
           setHasResponded(false);
         }
         
-        // Check if this request has been responded to by any user
         let anyoneResponded = false;
         for (let i = 0; i < localStorage.length; i++) {
           const key = localStorage.key(i);
@@ -250,17 +231,14 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   const canInteract = () => {
     if (!currentUser) return false;
     
-    // If user is volunteer/ngo/government and trying to interact with a need request
     if ((currentUser.role === 'volunteer' || currentUser.role === 'ngo' || currentUser.role === 'government') && type === 'need') {
-      return true; // Volunteers can help with needs
+      return true;
     }
     
-    // If user is victim and trying to interact with an offer
     if (currentUser.role === 'victim' && type === 'offer') {
-      return true; // Victims can request offers
+      return true;
     }
     
-    // All other combinations are not allowed
     return false;
   };
 
@@ -289,7 +267,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
       return;
     }
     
-    // Check if request has already been responded to by any user
     if (isAlreadyResponded && type === 'need') {
       toast({
         title: "Already In Progress",
@@ -308,7 +285,6 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
       const responseId = Date.now().toString();
       const userResponses = JSON.parse(localStorage.getItem(`responses_${currentUser.id}`) || '[]');
       
-      // Check if a response for this request already exists
       const existingResponseIndex = userResponses.findIndex((response: any) => response.requestId === requestId);
       
       const newResponse = {
@@ -324,12 +300,9 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
         responderUserId: currentUser.id
       };
       
-      // Only add the response if it doesn't exist already
       if (existingResponseIndex === -1) {
-        // Store in responses collection
         localStorage.setItem(`responses_${currentUser.id}`, JSON.stringify([newResponse, ...userResponses]));
         
-        // Add to notifications
         const notifications = JSON.parse(localStorage.getItem(`notifications_${currentUser.id}`) || '[]');
         
         const newNotification = {
@@ -344,14 +317,12 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
         
         localStorage.setItem(`notifications_${currentUser.id}`, JSON.stringify([newNotification, ...notifications]));
         
-        // Also store in a dedicated "responded_requests" collection to make lookups faster
         const respondedRequests = JSON.parse(localStorage.getItem(`responded_requests_${currentUser.id}`) || '[]');
         if (!respondedRequests.includes(requestId)) {
           respondedRequests.push(requestId);
           localStorage.setItem(`responded_requests_${currentUser.id}`, JSON.stringify(respondedRequests));
         }
         
-        // Also update the resources list to mark this request as assigned
         if (type === 'need') {
           const storedResources = localStorage.getItem('resources');
           if (storedResources) {
@@ -390,7 +361,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   return (
     <div 
       className={cn(
-        'relative overflow-hidden rounded-xl backdrop-blur-sm transition-all duration-300 hover:shadow-lg',
+        'relative overflow-hidden rounded-2xl backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:rounded-2xl',
         isLight
           ? (type === 'need' 
               ? 'border border-gray-300 bg-white shadow-soft' 
@@ -522,7 +493,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
 
       <Dialog open={showDetails} onOpenChange={setShowDetails}>
         <DialogContent className={cn(
-          "sm:max-w-md",
+          "sm:max-w-md rounded-2xl",
           isLight ? "bg-white text-black" : "bg-black border border-white/10 text-white"
         )}>
           <DialogHeader>
@@ -675,3 +646,4 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
 };
 
 export default ResourceCard;
+
