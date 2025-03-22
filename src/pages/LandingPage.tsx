@@ -84,9 +84,9 @@ const LandingPage = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-black text-foreground`}>
-      <header className={`py-6 px-6 bg-black`}>
-        <div className="container mx-auto">
+    <div className={`min-h-screen bg-black text-foreground w-full`}>
+      <header className={`py-6 px-6 bg-black w-full`}>
+        <div className="w-full px-4 sm:px-6 md:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <div className="font-bold text-2xl">Sanrakshak</div>
@@ -227,9 +227,9 @@ const LandingPage = () => {
         </div>
       )}
 
-      <main>
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4">
+      <main className="w-full">
+        <section className="py-20 md:py-28 w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8">
             <AnimatedTransition>
               <div className="max-w-4xl mx-auto text-center">
                 <div className="inline-flex items-center px-4 py-2 mb-6 rounded-full bg-primary/10 text-primary-foreground text-sm md:text-base font-medium">
@@ -277,8 +277,8 @@ const LandingPage = () => {
           </div>
         </section>
         
-        <section className="py-16 bg-black/40">
-          <div className="container mx-auto px-4">
+        <section className="py-16 bg-black/40 w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8">
             <AnimatedTransition>
               <div className="max-w-4xl mx-auto text-center mb-12">
                 <h2 className="text-3xl font-bold mb-4">How It Works</h2>
@@ -323,8 +323,8 @@ const LandingPage = () => {
         </section>
       </main>
       
-      <footer className="py-8 bg-black border-t border-white/10">
-        <div className="container mx-auto px-4">
+      <footer className="py-8 bg-black border-t border-white/10 w-full">
+        <div className="w-full px-4 sm:px-6 md:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <div className="text-sm text-muted-foreground">

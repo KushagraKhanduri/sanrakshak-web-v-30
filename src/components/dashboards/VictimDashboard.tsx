@@ -63,8 +63,8 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
   }, [resources, user]);
   
   return (
-    <div className="container mx-auto px-4">
-      <div className="mb-6">
+    <div className="w-full">
+      <div className="w-full px-4 sm:px-6 md:px-8 mb-6">
         <AnimatedTransition>
           <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 transition-transform duration-300 hover:scale-[1.02]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between">
@@ -94,7 +94,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         </AnimatedTransition>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="w-full px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <AnimatedTransition className="mb-6" delay={100}>
             <div className="flex items-center justify-between mb-4">
@@ -114,7 +114,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               ) : availableResources.length > 0 ? (
                 // Show available resources
                 availableResources.map(resource => (
-                  <div key={resource.id} className="bg-[#222222] transition-transform duration-300 hover:scale-[1.03]">
+                  <div key={resource.id} className="bg-[#222222] backdrop-blur-sm border border-white/5 shadow-lg transition-transform duration-300 hover:scale-[1.03]">
                     <ResourceCard
                       key={resource.id}
                       type="offer"
