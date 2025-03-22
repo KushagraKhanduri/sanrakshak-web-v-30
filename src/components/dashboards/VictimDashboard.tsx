@@ -66,7 +66,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
     <div className="container mx-auto px-4">
       <div className="mb-6">
         <AnimatedTransition>
-          <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6">
+          <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 transition-transform duration-300 hover:scale-[1.02]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between">
               <div className="mb-4 sm:mb-0 sm:mr-6">
                 <div className="mb-2">
@@ -114,20 +114,22 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               ) : availableResources.length > 0 ? (
                 // Show available resources
                 availableResources.map(resource => (
-                  <ResourceCard
-                    key={resource.id}
-                    type="offer"
-                    category={resource.category}
-                    title={resource.title}
-                    description={resource.description}
-                    location={resource.location}
-                    locationDetails={resource.locationDetails}
-                    contact={resource.contact}
-                    contactName={resource.contactName}
-                    urgent={resource.urgent}
-                    requestId={resource.id}
-                    isRequested={user?.id && user.role === 'victim' && respondedRequestIds.has(resource.id)}
-                  />
+                  <div key={resource.id} className="bg-[#222222] transition-transform duration-300 hover:scale-[1.03]">
+                    <ResourceCard
+                      key={resource.id}
+                      type="offer"
+                      category={resource.category}
+                      title={resource.title}
+                      description={resource.description}
+                      location={resource.location}
+                      locationDetails={resource.locationDetails}
+                      contact={resource.contact}
+                      contactName={resource.contactName}
+                      urgent={resource.urgent}
+                      requestId={resource.id}
+                      isRequested={user?.id && user.role === 'victim' && respondedRequestIds.has(resource.id)}
+                    />
+                  </div>
                 ))
               ) : (
                 // No resources available

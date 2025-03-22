@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ResourceCard from '../components/ResourceCard';
@@ -281,7 +280,7 @@ const VictimResources = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredResources.map(resource => (
-                <div key={resource.id} className="relative">
+                <div key={resource.id} className="relative bg-[#222222] transition-transform duration-300 hover:scale-[1.03]">
                   <div className="absolute top-3 right-3 text-xs text-gray-400">
                     {formatTimestamp(resource.timestamp)}
                   </div>
