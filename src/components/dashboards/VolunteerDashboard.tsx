@@ -97,7 +97,7 @@ const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData })
     <div className="container mx-auto px-4">
       <div className="mb-6">
         <AnimatedTransition>
-          <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6">
+          <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 transition-transform duration-300 hover:scale-[1.02]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between">
               <div className="mb-4 sm:mb-0 sm:mr-6">
                 <div className="flex items-center mb-2">
@@ -146,7 +146,7 @@ const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData })
               ) : needsResources.length > 0 ? (
                 // Show resources that need help
                 needsResources.map(resource => (
-                  <div key={resource.id} className="border-2 border-white/50 rounded-xl overflow-hidden">
+                  <div key={resource.id} className="border-2 border-white/50 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-[1.03]">
                     <ResourceCard
                       type="need"
                       category={resource.category}
@@ -181,7 +181,7 @@ const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData })
             <div className="space-y-4">
               {activeResponses.length > 0 ? (
                 activeResponses.map(response => (
-                  <div key={response.id} className="p-4 border border-white/10 rounded-xl bg-black/30">
+                  <div key={response.id} className="p-4 border border-white/10 rounded-xl bg-black/30 transition-transform duration-300 hover:scale-[1.02]">
                     <div className="flex justify-between items-start">
                       <div>
                         <div className="flex items-center">
@@ -237,6 +237,7 @@ const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData })
                 source="City Power & Utilities"
                 timestamp="1 hour ago"
                 priority="high"
+                className="transition-transform duration-300 hover:scale-[1.02]"
               />
               
               <StatusUpdate
@@ -246,12 +247,13 @@ const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData })
                 source="Department of Transportation"
                 timestamp="3 hours ago"
                 priority="medium"
+                className="transition-transform duration-300 hover:scale-[1.02]"
               />
             </div>
           </AnimatedTransition>
           
           <AnimatedTransition delay={250}>
-            <div className="bg-black/30 border border-white/10 rounded-xl p-5">
+            <div className="bg-black/30 border border-white/10 rounded-xl p-5 transition-transform duration-300 hover:scale-[1.02]">
               <h2 className="text-xl font-semibold mb-4">Volunteer Activity</h2>
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-sm">
