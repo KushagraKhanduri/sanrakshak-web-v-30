@@ -114,7 +114,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               ) : availableResources.length > 0 ? (
                 // Show available resources
                 availableResources.map(resource => (
-                  <div key={resource.id} className="bg-[#222222] backdrop-blur-sm bg-opacity-60 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.03]">
+                  <div key={resource.id} className="bg-[#222222] transition-transform duration-300 hover:scale-[1.03]">
                     <ResourceCard
                       key={resource.id}
                       type="offer"
@@ -133,7 +133,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
                 ))
               ) : (
                 // No resources available
-                <div className="col-span-2 p-6 border border-white/10 backdrop-blur-sm bg-black/30 rounded-xl text-center">
+                <div className="col-span-2 p-6 border border-white/10 rounded-xl text-center">
                   <p className="text-gray-400">No resources available at the moment.</p>
                 </div>
               )}
@@ -153,20 +153,18 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {myRequests.map(resource => (
-                  <div key={resource.id} className="backdrop-blur-sm bg-black/40 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.03]">
-                    <ResourceCard
-                      key={resource.id}
-                      type="need"
-                      category={resource.category}
-                      title={resource.title}
-                      description={resource.description}
-                      location={resource.location}
-                      contact={resource.contact}
-                      urgent={resource.urgent}
-                      requestId={resource.id}
-                      isRequested={true} // Always mark as requested since these are the user's own requests
-                    />
-                  </div>
+                  <ResourceCard
+                    key={resource.id}
+                    type="need"
+                    category={resource.category}
+                    title={resource.title}
+                    description={resource.description}
+                    location={resource.location}
+                    contact={resource.contact}
+                    urgent={resource.urgent}
+                    requestId={resource.id}
+                    isRequested={true} // Always mark as requested since these are the user's own requests
+                  />
                 ))}
               </div>
             </AnimatedTransition>
@@ -182,27 +180,23 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
             </div>
             
             <div className="space-y-4">
-              <div className="backdrop-blur-sm bg-black/30 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02]">
-                <StatusUpdate
-                  id="status-1"
-                  title="Power Restoration Progress"
-                  message="Crews are working to restore power to the eastern district. Estimated completion: 24 hours."
-                  source="City Power & Utilities"
-                  timestamp="1 hour ago"
-                  priority="high"
-                />
-              </div>
+              <StatusUpdate
+                id="status-1"
+                title="Power Restoration Progress"
+                message="Crews are working to restore power to the eastern district. Estimated completion: 24 hours."
+                source="City Power & Utilities"
+                timestamp="1 hour ago"
+                priority="high"
+              />
               
-              <div className="backdrop-blur-sm bg-black/30 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02]">
-                <StatusUpdate
-                  id="status-2"
-                  title="Road Closure Update"
-                  message="Main Street between 5th and 8th Ave remains flooded and closed to traffic. Use alternate routes."
-                  source="Department of Transportation"
-                  timestamp="3 hours ago"
-                  priority="medium"
-                />
-              </div>
+              <StatusUpdate
+                id="status-2"
+                title="Road Closure Update"
+                message="Main Street between 5th and 8th Ave remains flooded and closed to traffic. Use alternate routes."
+                source="Department of Transportation"
+                timestamp="3 hours ago"
+                priority="medium"
+              />
             </div>
           </AnimatedTransition>
         </div>
@@ -221,32 +215,26 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
             </div>
             
             <div className="space-y-4">
-              <div className="backdrop-blur-sm bg-black/40 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02]">
-                <EmergencyContact
-                  name="Emergency Response"
-                  role="Coordination Center"
-                  phone="555-911"
-                  contactId="emergency-1"
-                  available={true}
-                />
-              </div>
+              <EmergencyContact
+                name="Emergency Response"
+                role="Coordination Center"
+                phone="555-911"
+                contactId="emergency-1"
+                available={true}
+              />
               
-              <div className="backdrop-blur-sm bg-black/40 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02]">
-                <EmergencyContact
-                  name="Dr. Sarah Johnson"
-                  role="Medical Coordinator"
-                  phone="555-123-7890"
-                  contactId="medical-1"
-                  available={true}
-                />
-              </div>
+              <EmergencyContact
+                name="Dr. Sarah Johnson"
+                role="Medical Coordinator"
+                phone="555-123-7890"
+                contactId="medical-1"
+                available={true}
+              />
             </div>
           </AnimatedTransition>
           
           <AnimatedTransition delay={250}>
-            <div className="backdrop-blur-sm bg-black/30 border border-white/10 rounded-xl shadow-lg transition-transform duration-300 hover:scale-[1.02]">
-              <LocationFinder />
-            </div>
+            <LocationFinder />
           </AnimatedTransition>
         </div>
       </div>
