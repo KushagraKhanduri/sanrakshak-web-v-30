@@ -3,8 +3,13 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Activity, AlertCircle, BarChart3, Clock, Users } from 'lucide-react';
+import useResourceData from '@/hooks/useResourceData';
 
-const AdminDashboard = () => {
+interface AdminDashboardProps {
+  resourceData?: ReturnType<typeof useResourceData>;
+}
+
+const AdminDashboard: React.FC<AdminDashboardProps> = ({ resourceData }) => {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8">

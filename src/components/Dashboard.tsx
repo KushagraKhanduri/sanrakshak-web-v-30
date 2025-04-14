@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import VictimDashboard from './dashboards/VictimDashboard';
 import VolunteerDashboard from './dashboards/VolunteerDashboard';
 import NGODashboard from './dashboards/NGODashboard';
 import GovernmentDashboard from './dashboards/GovernmentDashboard';
+import AdminDashboard from './dashboards/AdminDashboard';
 import { Info, Map, Users, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AnimatedTransition from './AnimatedTransition';
@@ -12,7 +14,7 @@ import { PageBackground } from './ui/DashboardBackground';
 
 const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'resources' | 'updates' | 'map'>('resources');
-  const [userRole, setUserRole] = useState<'victim' | 'volunteer' | 'ngo' | 'government' | null>(null);
+  const [userRole, setUserRole] = useState<'victim' | 'volunteer' | 'ngo' | 'government' | 'admin' | null>(null);
   const [dashboardKey, setDashboardKey] = useState(Date.now());
   const resourceData = useResourceData();
   const [searchParams] = useSearchParams();
@@ -134,6 +136,8 @@ const Dashboard: React.FC = () => {
         return <NGODashboard key={dashboardKey} resourceData={resourceData} />;
       case 'government':
         return <GovernmentDashboard key={dashboardKey} resourceData={resourceData} />;
+      case 'admin':
+        return <AdminDashboard key={dashboardKey} resourceData={resourceData} />;
       default:
         return <VictimDashboard key={dashboardKey} resourceData={resourceData} />;
     }
