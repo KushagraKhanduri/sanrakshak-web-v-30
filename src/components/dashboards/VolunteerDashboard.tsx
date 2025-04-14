@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Info, ArrowRight } from 'lucide-react';
 import ResourceCard from '../ResourceCard';
@@ -8,8 +9,12 @@ import useResourceData from '@/hooks/useResourceData';
 import { Button } from '@/components/ui/button';
 import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
-const VolunteerDashboard = () => {
-  const { resources, responses, loading } = useResourceData();
+interface VolunteerDashboardProps {
+  resourceData?: ReturnType<typeof useResourceData>;
+}
+
+const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData }) => {
+  const { resources, responses, loading } = resourceData || useResourceData();
   const [user, setUser] = useState<any>(null);
   
   useEffect(() => {
