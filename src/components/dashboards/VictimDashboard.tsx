@@ -8,7 +8,6 @@ import AnimatedTransition from '../AnimatedTransition';
 import { Link } from 'react-router-dom';
 import useResourceData from '@/hooks/useResourceData';
 import EmergencyContactsDialog from '../EmergencyContactsDialog';
-import { ElegantShape } from '../ui/DashboardBackground';
 
 interface VictimDashboardProps {
   resourceData?: ReturnType<typeof useResourceData>;
@@ -60,6 +59,41 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
     <div className="w-full px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2">
         <AnimatedTransition className="mb-6" delay={100}>
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 p-4 sm:p-6 bg-black/40 backdrop-blur-sm shadow-lg">
+            <div className="absolute top-4 right-4 z-10">
+              <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs">
+                <Info size={12} className="mr-1 text-purple-300" />
+                <span>Critical</span>
+              </span>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+              <div className="mb-4 sm:mb-0 sm:mr-6">
+                <div className="mb-2">
+                  <h2 className="text-xl font-semibold text-white">Hurricane Warning: Category 3</h2>
+                </div>
+                <p className="text-gray-300 text-sm mb-3">
+                  Evacuation orders in effect for coastal areas. Shelters are open at Central High School and Community Center.
+                </p>
+                <div className="flex items-center text-xs text-gray-400">
+                  <Info size={12} className="mr-1" />
+                  <span>Updated 30 minutes ago from National Weather Service</span>
+                </div>
+              </div>
+              
+              <div className="flex space-x-2">
+                <Link to="/emergency-plan" className="px-4 py-2 rounded-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90 transition-all">
+                  Emergency Plan
+                </Link>
+                <Link to="/shelter-map" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-colors">
+                  Shelter Map
+                </Link>
+              </div>
+            </div>
+          </div>
+        </AnimatedTransition>
+        
+        <AnimatedTransition className="mb-6" delay={100}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">Available Resources</h2>
             <Link to="/resources" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
@@ -92,7 +126,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
                 />
               ))
             ) : (
-              <div className="col-span-2 p-6 border border-white/10 rounded-2xl text-center">
+              <div className="col-span-2 p-6 border border-white/10 rounded-2xl bg-black/40 backdrop-blur-sm text-center">
                 <p className="text-gray-400">No resources available at the moment.</p>
               </div>
             )}
