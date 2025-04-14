@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import VictimDashboard from './dashboards/VictimDashboard';
 import VolunteerDashboard from './dashboards/VolunteerDashboard';
@@ -9,7 +8,7 @@ import { cn } from '@/lib/utils';
 import AnimatedTransition from './AnimatedTransition';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import useResourceData from '@/hooks/useResourceData';
-import { DashboardBackground } from './ui/DashboardBackground';
+import { PageBackground } from './ui/DashboardBackground';
 
 const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'resources' | 'updates' | 'map'>('resources');
@@ -25,9 +24,6 @@ const Dashboard: React.FC = () => {
       const user = JSON.parse(authUser);
       setUserRole(user.role);
       console.info('Rendering dashboard for role:', user.role);
-      
-      // We'll keep this commented out as we want to stay on the dashboard page
-      // and not redirect to resources pages
       
       /* 
       // Redirect to appropriate resource page based on role
@@ -145,11 +141,12 @@ const Dashboard: React.FC = () => {
   
   return (
     <>
-      <DashboardBackground />
-      <div className="w-full px-4 sm:px-6 md:px-8">
-        <EmergencyAlert />
-        {renderDashboardByRole()}
-      </div>
+      <PageBackground>
+        <div className="w-full px-4 sm:px-6 md:px-8">
+          <EmergencyAlert />
+          {renderDashboardByRole()}
+        </div>
+      </PageBackground>
     </>
   );
 };

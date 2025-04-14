@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -128,3 +127,5 @@ export function PageBackground({ children }: { children: React.ReactNode }) {
         </div>
     );
 }
+
+export const DashboardBackground = PageBackground;
