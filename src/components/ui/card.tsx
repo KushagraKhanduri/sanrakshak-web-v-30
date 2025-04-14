@@ -16,7 +16,7 @@ const Card = React.forwardRef<
       ref={ref}
       className={cn(
         "rounded-2xl border bg-card text-card-foreground transition-transform duration-300 hover:scale-[1.02] hover:rounded-2xl",
-        isDark ? "border-white/10 shadow-sm" : "border-gray-200 shadow-soft",
+        isDark ? "border-white/10 bg-black/40 backdrop-blur-sm shadow-sm" : "border-gray-200 shadow-soft",
         className
       )}
       {...props}

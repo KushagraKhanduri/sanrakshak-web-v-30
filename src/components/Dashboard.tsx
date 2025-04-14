@@ -92,7 +92,7 @@ const Dashboard: React.FC = () => {
   const EmergencyAlert = () => (
     <div className="mb-6">
       <AnimatedTransition>
-        <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 bg-gradient-to-r from-black/50 via-black/30 to-black/50 backdrop-blur-sm">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10 p-4 sm:p-6 bg-black/40 backdrop-blur-sm shadow-lg">
           <div className="absolute top-4 right-4 z-10">
             <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs">
               <Zap size={12} className="mr-1 text-purple-300" />
@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
             </div>
             
             <div className="flex space-x-2">
-              <Link to="/emergency-plan" className="px-4 py-2 rounded-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:bg-white/90 transition-colors">
+              <Link to="/emergency-plan" className="px-4 py-2 rounded-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90 transition-all">
                 Emergency Plan
               </Link>
               <Link to="/shelter-map" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-colors">

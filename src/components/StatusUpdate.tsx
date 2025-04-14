@@ -46,7 +46,7 @@ const StatusUpdate: React.FC<StatusUpdateProps> = ({
         'rounded-2xl overflow-hidden transition-all',
         isLight 
           ? 'bg-white border border-gray-200' 
-          : 'bg-black/30 backdrop-blur-sm border border-white/10',
+          : 'bg-black/40 backdrop-blur-sm border border-white/10',
         getPriorityStyles(),
         className
       )}
