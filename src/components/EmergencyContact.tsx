@@ -43,14 +43,14 @@ const EmergencyContact: React.FC<EmergencyContactProps> = ({
   return (
     <div 
       className={cn(
-        'rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md',
+        'rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md relative z-10',
         isLight 
           ? 'bg-white border border-gray-200' 
           : 'bg-black/40 backdrop-blur-sm border border-white/10',
         className
       )}
     >
-      <div className="p-4">
+      <div className="p-4 relative">
         <div className="flex items-center mb-2">
           <div className={cn(
             "w-8 h-8 rounded-full flex items-center justify-center mr-3",
@@ -58,13 +58,13 @@ const EmergencyContact: React.FC<EmergencyContactProps> = ({
           )}>
             {getIcon()}
           </div>
-          <div>
+          <div className="relative z-10">
             <h3 className="font-medium">{name}</h3>
             <p className={cn("text-xs", isLight ? "text-gray-600" : "text-gray-400")}>{role}</p>
           </div>
         </div>
         
-        <div className="flex justify-between items-center mt-3">
+        <div className="flex justify-between items-center mt-3 relative z-10">
           <div className="flex items-center">
             <Phone size={14} className={cn("mr-1.5", isLight ? "text-gray-600" : "text-gray-400")} />
             <span className={cn("text-sm", isLight ? "text-gray-800" : "text-gray-300")}>{phone}</span>
@@ -85,7 +85,7 @@ const EmergencyContact: React.FC<EmergencyContactProps> = ({
         <button
           onClick={handleCall}
           className={cn(
-            "w-full mt-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+            "w-full mt-3 py-1.5 rounded-full text-sm font-medium transition-colors relative z-10",
             isLight 
               ? "bg-black text-white hover:bg-black/90" 
               : "bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90"

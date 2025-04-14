@@ -43,7 +43,7 @@ const StatusUpdate: React.FC<StatusUpdateProps> = ({
   return (
     <div 
       className={cn(
-        'rounded-2xl overflow-hidden transition-all',
+        'rounded-2xl overflow-hidden transition-all relative z-10',
         isLight 
           ? 'bg-white border border-gray-200' 
           : 'bg-black/40 backdrop-blur-sm border border-white/10',
@@ -51,8 +51,8 @@ const StatusUpdate: React.FC<StatusUpdateProps> = ({
         className
       )}
     >
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
+      <div className="p-4 relative">
+        <div className="flex justify-between items-start mb-2 relative z-10">
           <h3 className="font-semibold text-lg">{title}</h3>
           <div className="flex items-center text-xs text-gray-400">
             <Clock size={12} className="mr-1" />
@@ -60,9 +60,9 @@ const StatusUpdate: React.FC<StatusUpdateProps> = ({
           </div>
         </div>
         
-        <p className={cn("text-sm mb-3", isLight ? "text-gray-700" : "text-gray-300")}>{message}</p>
+        <p className={cn("text-sm mb-3 relative z-10", isLight ? "text-gray-700" : "text-gray-300")}>{message}</p>
         
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center relative z-10">
           <span className={cn("text-xs", isLight ? "text-gray-600" : "text-gray-500")}>Source: {source}</span>
           <Link 
             to={`/status/${id}`} 
