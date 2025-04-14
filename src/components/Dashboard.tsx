@@ -92,7 +92,7 @@ const Dashboard: React.FC = () => {
   const EmergencyAlert = () => (
     <div className="mb-6">
       <AnimatedTransition>
-        <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6">
+        <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 bg-gradient-to-r from-black/50 via-black/30 to-black/50 backdrop-blur-sm">
           <div className="absolute top-4 right-4 z-10">
             <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs">
               <Zap size={12} className="mr-1" />
