@@ -1,15 +1,16 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ReportsSection from '@/components/ReportsSection';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
 const Reports = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full bg-black text-white">
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       <div className="w-full px-4 sm:px-6 md:px-8 py-8">
         <div className="mb-6">
           <Button 

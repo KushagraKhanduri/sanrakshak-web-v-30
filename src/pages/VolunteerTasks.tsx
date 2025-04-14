@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import Header from '@/components/Header';
 import AnimatedTransition from '@/components/AnimatedTransition';
@@ -7,6 +6,7 @@ import { CheckCircle, ArrowLeft, Clock, ArrowRight, MapPin, Phone, User } from '
 import { useTheme } from '../context/ThemeProvider';
 import useResourceData, { Resource } from '@/hooks/useResourceData';
 import { Card, CardContent } from '@/components/ui/card';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
 const VolunteerTasks = () => {
   const [loading, setLoading] = useState(true);
@@ -98,7 +98,8 @@ const VolunteerTasks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       <Header />
       
       <main className="pt-20 pb-16 min-h-screen">

@@ -1,14 +1,14 @@
-
 import React from 'react';
 import Header from '../components/Header';
 import { FileText, MapPin, Shield, User, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BackButton from '../components/BackButton';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
 const EmergencyPlan = () => {
   return (
-    <div className="min-h-screen w-full bg-black text-white">
-      <Header emergency={true} />
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       
       <main className="pt-20 pb-16 w-full">
         <div className="w-full px-4 sm:px-6 md:px-8">

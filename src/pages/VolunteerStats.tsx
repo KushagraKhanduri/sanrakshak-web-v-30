@@ -1,12 +1,11 @@
-
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import AnimatedTransition from '@/components/AnimatedTransition';
 import { ArrowLeft, Trophy, Clock, CheckCircle, User, Heart, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeProvider';
+import GeometricBackground from '@/components/ui/GeometricBackground';
 
-// Component for stat cards
 const StatCard = ({ 
   icon, 
   value, 
@@ -44,40 +43,9 @@ const StatCard = ({
 };
 
 const VolunteerStats = () => {
-  const navigate = useNavigate();
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
-
-  const activities = [
-    {
-      type: 'Task Completed',
-      title: 'Delivered Medical Supplies',
-      date: '2 days ago',
-      points: 15
-    },
-    {
-      type: 'Hours Volunteered',
-      title: 'Shelter Support',
-      date: '4 days ago',
-      hours: 4,
-      points: 20
-    },
-    {
-      type: 'Task Completed',
-      title: 'Food Delivery',
-      date: '1 week ago',
-      points: 15
-    },
-    {
-      type: 'Special Recognition',
-      title: 'First Responder Badge',
-      date: '2 weeks ago',
-      points: 50
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       <Header />
       
       <main className="pt-20 pb-16">

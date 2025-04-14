@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
@@ -6,6 +5,7 @@ import { Clock, Info, AlertTriangle, MapPin, ExternalLink, Bookmark, Share2, Nav
 import { useTheme } from '../context/ThemeProvider';
 import BackButton from '../components/BackButton';
 import { useToast } from '@/hooks/use-toast';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
 const StatusDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,7 +14,6 @@ const StatusDetails = () => {
   const isLight = theme === 'light';
   const [mapError, setMapError] = useState(false);
   
-  // Status data mapping
   const statusMap: { [key: string]: any } = {
     'status-1': {
       title: 'Power Restoration Progress',
@@ -105,18 +104,15 @@ const StatusDetails = () => {
     }
   };
 
-  // Calculate the current user's simulated location (for demo purposes)
   const userLocation = {
     lat: status.coordinates.lat + 0.005,
     lng: status.coordinates.lng - 0.003
   };
 
   useEffect(() => {
-    // Reset map error state when component mounts or id changes
     setMapError(false);
   }, [id]);
 
-  // Function to handle map load error
   const handleMapError = () => {
     setMapError(true);
     toast({
@@ -127,7 +123,8 @@ const StatusDetails = () => {
   };
   
   return (
-    <div className={`min-h-screen ${isLight ? "bg-white" : "bg-black"} text-foreground`}>
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       <Header emergency={true} />
       
       <main className="pt-20 pb-16">
@@ -190,30 +187,23 @@ const StatusDetails = () => {
                   <span>Location Information</span>
                 </div>
                 
-                {/* Map visualization with static fallback */}
                 <div className={`mb-4 overflow-hidden rounded-lg border ${isLight ? "border-gray-300" : "border-white/10"} h-[250px] relative`}>
                   {mapError ? (
                     <div className={`w-full h-full flex flex-col items-center justify-center ${isLight ? "bg-gray-100" : "bg-black/40"} p-4`}>
                       <AlertTriangle className="h-8 w-8 text-orange-500 mb-2" />
                       <p className="text-sm text-center">Map could not be loaded. API key issue detected.</p>
                       
-                      {/* Static map fallback */}
                       <div className="w-full mt-4 flex items-center justify-center">
                         <div className={`relative w-[80%] h-[120px] ${isLight ? "bg-blue-100" : "bg-blue-900/30"} rounded-lg overflow-hidden`}>
-                          {/* Main area */}
                           <div className={`absolute top-[30%] left-[20%] w-[60%] h-[40%] ${isLight ? "bg-blue-200" : "bg-blue-800/40"} rounded`}></div>
                           
-                          {/* Roads */}
                           <div className={`absolute top-[50%] left-0 w-full h-[2px] ${isLight ? "bg-gray-400" : "bg-gray-600"}`}></div>
                           <div className={`absolute top-0 left-[50%] w-[2px] h-full ${isLight ? "bg-gray-400" : "bg-gray-600"}`}></div>
                           
-                          {/* Affected area */}
                           <div className={`absolute top-[40%] left-[40%] w-[20%] h-[20%] ${isLight ? "bg-red-200" : "bg-red-900/40"} rounded-full animate-pulse`}></div>
                           
-                          {/* Incident location */}
                           <div className="absolute top-[45%] left-[45%] w-[10%] h-[10%] bg-red-500 rounded-full z-10"></div>
                           
-                          {/* User location */}
                           <div className="absolute top-[30%] left-[60%] w-[8px] h-[8px] bg-blue-500 rounded-full z-10"></div>
                         </div>
                       </div>
@@ -230,7 +220,6 @@ const StatusDetails = () => {
                     </div>
                   )}
                   
-                  {/* Map coordinates overlay */}
                   <div className="absolute bottom-3 left-3 right-3 flex justify-between z-20 pointer-events-none">
                     <div className={`px-2 py-1 rounded ${isLight ? "bg-white/90" : "bg-black/60"} text-xs backdrop-blur-sm`}>
                       {status.coordinates.lat.toFixed(4)}, {status.coordinates.lng.toFixed(4)}

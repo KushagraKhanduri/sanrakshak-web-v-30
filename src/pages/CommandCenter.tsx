@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MonitorPlay, Network, AlertCircle, Clock, Radio, Shield, Users, MapPin, BarChart4 } from 'lucide-react';
 import Header from '@/components/Header';
@@ -6,14 +5,16 @@ import AnimatedTransition from '@/components/AnimatedTransition';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import StatusUpdate from '@/components/StatusUpdate';
 import BackButton from '@/components/BackButton';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
 const CommandCenter = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       <Header />
       <div className="container mx-auto px-4 py-8">
         <AnimatedTransition>
-          <div className="mt-16 mb-4"> {/* Added mt-16 to add top margin and prevent overlap with header */}
+          <div className="mt-16 mb-4">
             <BackButton />
           </div>
           <div className="mb-8">

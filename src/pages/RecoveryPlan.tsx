@@ -1,18 +1,19 @@
-
 import React from 'react';
 import { HardHat, Hammer, LifeBuoy, House, CheckCircle, Clock, AlertTriangle, Users } from 'lucide-react';
 import Header from '@/components/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AnimatedTransition from '@/components/AnimatedTransition';
 import BackButton from '@/components/BackButton';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
 const RecoveryPlan = () => {
   return (
-    <div className="min-h-screen w-full bg-background">
+    <div className="min-h-screen w-full bg-[#030303] text-white">
+      <GeometricBackground />
       <Header />
       <div className="w-full px-4 sm:px-6 md:px-8 py-8">
         <AnimatedTransition>
-          <div className="mt-16 mb-4"> {/* Added mt-16 to add top margin and prevent overlap with header */}
+          <div className="mt-16 mb-4">
             <BackButton />
           </div>
           <div className="mb-8">

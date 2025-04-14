@@ -1,341 +1,270 @@
-import React, { useMemo, useEffect } from 'react';
-import { Users, ArrowRight, Clock, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Info, ArrowRight } from 'lucide-react';
 import ResourceCard from '../ResourceCard';
 import StatusUpdate from '../StatusUpdate';
 import AnimatedTransition from '../AnimatedTransition';
 import { Link } from 'react-router-dom';
 import useResourceData from '@/hooks/useResourceData';
-import { ElegantShape } from '../ui/DashboardBackground';
+import { Button } from '@/components/ui/button';
+import { GeometricBackground } from '@/components/ui/GeometricBackground';
 
-interface VolunteerDashboardProps {
-  resourceData?: ReturnType<typeof useResourceData>;
-}
-
-const VolunteerDashboard: React.FC<VolunteerDashboardProps> = ({ resourceData }) => {
-  // Use passed resourceData or create a new instance
-  const { resources, responses, loading, cleanupInvalidResponses } = resourceData || useResourceData();
+const VolunteerDashboard = () => {
+  const { resources, responses, loading } = useResourceData();
+  const [user, setUser] = useState<any>(null);
   
-  // Clean up any invalid responses when the component mounts
   useEffect(() => {
-    if (!loading && cleanupInvalidResponses) {
-      cleanupInvalidResponses();
+    const storedUser = localStorage.getItem('authUser');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
-  }, [loading, cleanupInvalidResponses]);
+  }, []);
   
-  // Filter resources to only show needs (that volunteers can help with)
-  const needsResources = useMemo(() => {
-    // Get current user to check responses
-    const currentUser = JSON.parse(localStorage.getItem('authUser') || '{}');
+  const respondedRequestIds = useMemo(() => {
+    if (!user?.id) return new Set<string>();
     
-    // Get IDs of requests the user has already responded to
-    const respondedRequestIds = new Set(
-      responses
-        .filter(r => r.type === 'offer')
-        .map(response => response.requestId)
-    );
-    
+    const userResponses = JSON.parse(localStorage.getItem(`responses_${user.id}`) || '[]');
+    return new Set(userResponses.map((response: any) => response.requestId));
+  }, [user, responses]);
+  
+  const availableResources = useMemo(() => {
     return resources
-      .filter(resource => 
-        // Only show needs (not offers) that haven't been responded to by this user
-        resource.type === 'need' && 
-        !respondedRequestIds.has(resource.id)
-      )
+      .filter(resource => resource.type === 'need')
       .sort((a, b) => {
-        // Sort by urgent first, then by timestamp (newest first)
         if (a.urgent && !b.urgent) return -1;
         if (!a.urgent && b.urgent) return 1;
         return b.timestamp - a.timestamp;
       })
-      .slice(0, 4); // Only show the top 4
-  }, [resources, responses]);
+      .slice(0, 4);
+  }, [resources]);
   
-  // Get active responses for the current user
-  const activeResponses = useMemo(() => {
-    const currentUser = JSON.parse(localStorage.getItem('authUser') || '{}');
-    if (!currentUser.id) return [];
+  const myOffers = useMemo(() => {
+    if (!user?.id) return [];
     
-    // Get responses for this user
-    const userResponses = responses.filter(response => 
-      response.type === 'offer' && 
-      ['pending', 'accepted'].includes(response.status)
-    );
-    
-    // Only include responses that have a matching resource
-    const validResponses = userResponses.filter(response => 
-      resources.some(resource => resource.id === response.requestId)
-    );
-    
-    return validResponses.slice(0, 2); // Only show the top 2
-  }, [responses, resources]);
-
-  // Add an effect to ensure real-time updates 
-  useEffect(() => {
-    const handleResourceUpdate = () => {
-      // This will trigger a refresh with the latest data
-      console.log('Resource update detected in VolunteerDashboard');
-    };
-    
-    window.addEventListener('resource-created', handleResourceUpdate);
-    window.addEventListener('resource-updated', handleResourceUpdate);
-    window.addEventListener('response-created', handleResourceUpdate);
-    window.addEventListener('response-updated', handleResourceUpdate);
-    
-    return () => {
-      window.removeEventListener('resource-created', handleResourceUpdate);
-      window.removeEventListener('resource-updated', handleResourceUpdate);
-      window.removeEventListener('response-created', handleResourceUpdate);
-      window.removeEventListener('response-updated', handleResourceUpdate);
-    };
-  }, []);
-
-  // Generate task IDs in the correct format for navigation
-  const getTaskIdForResponse = (responseId: string) => {
-    return `task-${responseId}`;
-  };
+    return resources
+      .filter(resource => 
+        resource.type === 'offer' && 
+        resource.userId === user.id
+      )
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, 2);
+  }, [resources, user]);
   
   return (
-    <div className="relative min-h-screen w-full flex flex-col bg-[#030303]">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-purple-500/[0.05] blur-3xl" />
-
-      <div className="absolute inset-0 overflow-hidden">
-        <ElegantShape
-          delay={0.3}
-          width={600}
-          height={140}
-          rotate={12}
-          gradient="from-blue-500/[0.15]"
-          className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
-        />
-
-        <ElegantShape
-          delay={0.5}
-          width={500}
-          height={120}
-          rotate={-15}
-          gradient="from-purple-500/[0.15]"
-          className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
-        />
-
-        <ElegantShape
-          delay={0.4}
-          width={300}
-          height={80}
-          rotate={-8}
-          gradient="from-sky-500/[0.15]"
-          className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
-        />
-
-        <ElegantShape
-          delay={0.6}
-          width={200}
-          height={60}
-          rotate={20}
-          gradient="from-teal-500/[0.15]"
-          className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
-        />
-
-        <ElegantShape
-          delay={0.7}
-          width={150}
-          height={40}
-          rotate={-25}
-          gradient="from-orange-500/[0.15]"
-          className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
-        />
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="mb-6">
-          <AnimatedTransition>
-            <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 transition-transform duration-300 hover:scale-[1.02]">
+    <div className="min-h-screen w-full bg-[#030303] text-white relative">
+      <GeometricBackground />
+      <div className="w-full px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-3 gap-6 relative">
+        <div className="lg:col-span-2">
+          <AnimatedTransition className="mb-6" delay={100}>
+            <div className="relative overflow-hidden rounded-2xl border border-white/10 p-4 sm:p-6 bg-black/40 backdrop-blur-sm shadow-lg">
+              <div className="absolute top-4 right-4 z-10">
+                <span className="inline-flex items-center rounded-full bg-purple-500/20 px-2.5 py-1 text-xs">
+                  <Info size={12} className="mr-1 text-purple-300" />
+                  <span className="text-purple-200">Critical</span>
+                </span>
+              </div>
+              
               <div className="flex flex-col sm:flex-row sm:items-center justify-between">
                 <div className="mb-4 sm:mb-0 sm:mr-6">
-                  <div className="flex items-center mb-2">
-                    <Users size={18} className="mr-2 text-white" />
-                    <h2 className="text-xl font-semibold">Volunteer Dashboard</h2>
+                  <div className="mb-2">
+                    <h2 className="text-xl font-semibold text-white">Hurricane Warning: Category 3</h2>
                   </div>
                   <p className="text-gray-300 text-sm mb-3">
-                    Thank you for volunteering. Your assistance is making a real difference in people's lives during this emergency.
+                    Evacuation orders in effect for coastal areas. Shelters are open at Central High School and Community Center.
                   </p>
                   <div className="flex items-center text-xs text-gray-400">
-                    <Clock size={12} className="mr-1" />
-                    <span>Last updated: just now</span>
+                    <Info size={12} className="mr-1 text-purple-300" />
+                    <span>Updated 30 minutes ago from National Weather Service</span>
                   </div>
                 </div>
                 
                 <div className="flex space-x-2">
-                  <Link to="/resources" className="px-4 py-2 rounded-full text-sm bg-white text-black hover:bg-white/90 transition-colors">
-                    Help Requests
-                  </Link>
-                  <Link to="/volunteer-tasks" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-colors">
-                    My Tasks
-                  </Link>
+                  <Button
+                    asChild
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90 transition-all text-white border-none"
+                  >
+                    <Link to="/emergency-plan">Emergency Plan</Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    asChild
+                    className="bg-white/10 hover:bg-white/15 text-white border-white/20"
+                  >
+                    <Link to="/shelter-map">Shelter Map</Link>
+                  </Button>
                 </div>
               </div>
             </div>
           </AnimatedTransition>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <AnimatedTransition className="mb-6" delay={100}>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">Assistance Needed</h2>
-                <Link to="/resources" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
+          
+          <AnimatedTransition className="mb-6" delay={100}>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Available Requests</h2>
+              <Button
+                variant="ghost"
+                asChild
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Link to="/resources" className="flex items-center">
                   <span className="mr-1">View All</span>
                   <ArrowRight size={14} />
                 </Link>
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {loading ? (
+                Array(4).fill(0).map((_, index) => (
+                  <div key={`loading-${index}`} className="animate-pulse rounded-2xl p-6 bg-white/5 h-64"></div>
+                ))
+              ) : availableResources.length > 0 ? (
+                availableResources.map(resource => (
+                  <ResourceCard
+                    key={resource.id}
+                    type="need"
+                    category={resource.category}
+                    title={resource.title}
+                    description={resource.description}
+                    location={resource.location}
+                    locationDetails={resource.locationDetails}
+                    contact={resource.contact}
+                    contactName={resource.contactName}
+                    urgent={resource.urgent}
+                    requestId={resource.id}
+                    isRequested={user?.id && user.role === 'volunteer' && respondedRequestIds.has(resource.id)}
+                    className="rounded-2xl"
+                  />
+                ))
+              ) : (
+                <div className="col-span-2 p-6 border border-white/10 rounded-2xl bg-black/40 backdrop-blur-sm text-center">
+                  <p className="text-gray-400">No requests available at the moment.</p>
+                </div>
+              )}
+            </div>
+          </AnimatedTransition>
+          
+          {myOffers.length > 0 && (
+            <AnimatedTransition className="mb-6" delay={150}>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">My Offers</h2>
+                <Button
+                  variant="ghost"
+                  asChild
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <Link to="/volunteer-resources" className="flex items-center">
+                    <span className="mr-1">View All</span>
+                    <ArrowRight size={14} />
+                  </Link>
+                </Button>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {loading ? (
-                  // Show loading states
-                  Array(4).fill(0).map((_, index) => (
-                    <div key={`loading-${index}`} className="animate-pulse rounded-xl p-6 bg-white/5 h-64"></div>
-                  ))
-                ) : needsResources.length > 0 ? (
-                  // Show resources that need help
-                  needsResources.map(resource => (
-                    <div key={resource.id} className="border-2 border-white/50 rounded-xl overflow-hidden transition-transform duration-300 hover:scale-[1.03]">
-                      <ResourceCard
-                        type="need"
-                        category={resource.category}
-                        title={resource.title}
-                        description={resource.description}
-                        location={resource.location}
-                        contact={resource.contact}
-                        urgent={resource.urgent}
-                        requestId={resource.id}
-                        isRequested={false} // Always false here as we're already filtering out responded items
-                      />
-                    </div>
-                  ))
-                ) : (
-                  // No resources available
-                  <div className="col-span-2 p-6 border border-white/10 rounded-xl text-center">
-                    <p className="text-gray-400">No assistance requests at the moment.</p>
-                  </div>
-                )}
+                {myOffers.map(resource => (
+                  <ResourceCard
+                    key={resource.id}
+                    type="offer"
+                    category={resource.category}
+                    title={resource.title}
+                    description={resource.description}
+                    location={resource.location}
+                    contact={resource.contact}
+                    urgent={resource.urgent}
+                    requestId={resource.id}
+                    isRequested={true}
+                    className="rounded-2xl"
+                  />
+                ))}
               </div>
             </AnimatedTransition>
-            
-            <AnimatedTransition delay={200}>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">My Active Responses</h2>
-                <Link to="/volunteer-tasks" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
-                  <span className="mr-1">View All</span>
-                  <ArrowRight size={14} />
-                </Link>
-              </div>
-              
-              <div className="space-y-4">
-                {activeResponses.length > 0 ? (
-                  activeResponses.map(response => (
-                    <div key={response.id} className="p-4 border border-white/10 rounded-xl bg-black/30 transition-transform duration-300 hover:scale-[1.02]">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <div className="flex items-center">
-                            <CheckCircle size={16} className="mr-2 text-white/70" />
-                            <h3 className="font-medium">{response.title}</h3>
-                          </div>
-                          <p className="text-sm text-gray-400 mt-1">Helping with {response.category} resources</p>
-                        </div>
-                        <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full">
-                          {response.status === 'pending' ? 'In Progress' : response.status}
-                        </span>
-                      </div>
-                      <div className="mt-3 pt-3 border-t border-white/5 flex justify-between items-center">
-                        <span className="text-xs text-gray-500">
-                          {new Date(response.time).toLocaleString()}
-                        </span>
-                        <Link 
-                          to={`/volunteer-tasks/${getTaskIdForResponse(response.id)}`} 
-                          className="text-xs text-white bg-white/10 hover:bg-white/15 px-2 py-1 rounded transition-colors"
-                        >
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-4 border border-white/10 rounded-xl bg-black/30 text-center">
-                    <p className="text-gray-400">You haven't responded to any requests yet.</p>
-                    <Link to="/resources" className="inline-block mt-2 text-sm bg-white/10 hover:bg-white/15 px-3 py-1 rounded">
-                      Find people to help
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </AnimatedTransition>
-          </div>
+          )}
           
-          <div>
-            <AnimatedTransition className="mb-6" delay={150}>
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">Status Updates</h2>
-                <Link to="/alerts" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
+          <AnimatedTransition delay={200}>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Status Updates</h2>
+              <Button
+                variant="ghost"
+                asChild
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Link to="/alerts" className="flex items-center">
                   <span className="mr-1">View All</span>
                   <ArrowRight size={14} />
                 </Link>
+              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <StatusUpdate
+                id="status-1"
+                title="Power Restoration Progress"
+                message="Crews are working to restore power to the eastern district. Estimated completion: 24 hours."
+                source="City Power & Utilities"
+                timestamp="1 hour ago"
+                priority="high"
+              />
+              
+              <StatusUpdate
+                id="status-2"
+                title="Road Closure Update"
+                message="Main Street between 5th and 8th Ave remains flooded and closed to traffic. Use alternate routes."
+                source="Department of Transportation"
+                timestamp="3 hours ago"
+                priority="medium"
+              />
+            </div>
+          </AnimatedTransition>
+        </div>
+        
+        <div>
+          <AnimatedTransition className="mb-6" delay={150}>
+            <div className="rounded-2xl border border-white/10 p-4 sm:p-6 bg-black/40 backdrop-blur-sm shadow-lg">
+              <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Button asChild className="w-full">
+                  <Link to="/volunteer-resources">Offer Resources</Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link to="/volunteer-tasks">View Assigned Tasks</Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link to="/alerts">Check Alerts</Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link to="/connect">Connect with Others</Link>
+                </Button>
               </div>
+            </div>
+          </AnimatedTransition>
+          
+          <AnimatedTransition delay={250}>
+            <div className="rounded-2xl border border-white/10 p-4 sm:p-6 bg-black/40 backdrop-blur-sm shadow-lg">
+              <h2 className="text-xl font-semibold mb-4">Volunteer Stats</h2>
               
               <div className="space-y-4">
-                <StatusUpdate
-                  id="status-1"
-                  title="Power Restoration Progress"
-                  message="Crews are working to restore power to the eastern district. Estimated completion: 24 hours."
-                  source="City Power & Utilities"
-                  timestamp="1 hour ago"
-                  priority="high"
-                  className="transition-transform duration-300 hover:scale-[1.02]"
-                />
+                <div className="flex items-center justify-between">
+                  <span>Hours Volunteered:</span>
+                  <span className="font-semibold">42 Hours</span>
+                </div>
                 
-                <StatusUpdate
-                  id="status-2"
-                  title="Road Closure Update"
-                  message="Main Street between 5th and 8th Ave remains flooded and closed to traffic. Use alternate routes."
-                  source="Department of Transportation"
-                  timestamp="3 hours ago"
-                  priority="medium"
-                  className="transition-transform duration-300 hover:scale-[1.02]"
-                />
-              </div>
-            </AnimatedTransition>
-            
-            <AnimatedTransition delay={250}>
-              <div className="bg-black/30 border border-white/10 rounded-xl p-5 transition-transform duration-300 hover:scale-[1.02]">
-                <h2 className="text-xl font-semibold mb-4">Volunteer Activity</h2>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Hours volunteered:</span>
-                    <span className="font-medium">12 hours</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>People helped:</span>
-                    <span className="font-medium">27</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Tasks completed:</span>
-                    <span className="font-medium">4</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span>Active tasks:</span>
-                    <span className="font-medium">2</span>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-white/10">
-                    <Link to="/volunteer-stats" className="text-sm text-white flex items-center justify-center hover:underline">
-                      <span>View detailed statistics</span>
-                      <ArrowRight size={14} className="ml-1" />
-                    </Link>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <span>Tasks Completed:</span>
+                  <span className="font-semibold">15 Tasks</span>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span>Community Impact:</span>
+                  <span className="font-semibold">38 People Helped</span>
                 </div>
               </div>
-            </AnimatedTransition>
-          </div>
+              
+              <Button asChild variant="outline" className="w-full mt-4">
+                <Link to="/volunteer-stats">View Full Stats</Link>
+              </Button>
+            </div>
+          </AnimatedTransition>
         </div>
       </div>
-
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
     </div>
   );
 };
