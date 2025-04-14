@@ -1,162 +1,55 @@
-
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute";
-import AdminRoute from "./AdminRoute";
-import AuthRoute from "./AuthRoute";
-import ResourceRouteRedirect from "./ResourceRouteRedirect";
-
-import Index from "../pages/Index";
-import NotFound from "../pages/NotFound";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import VolunteerResources from "../pages/VolunteerResources";
-import VictimResources from "../pages/VictimResources";
-import Map from "../pages/Map";
-import Alerts from "../pages/Alerts";
-import Profile from "../pages/Profile";
-import Settings from "../pages/Settings";
-import ForgotPassword from "../pages/ForgotPassword";
-import EmergencyPlan from "../pages/EmergencyPlan";
-import ShelterMap from "../pages/ShelterMap";
-import ChatSection from "../pages/ChatSection";
-import ResourceDetails from "../pages/ResourceDetails";
-import StatusDetails from "../pages/StatusDetails";
-import LandingPage from "../pages/LandingPage";
-import VolunteerTasks from "../pages/VolunteerTasks";
-import VolunteerTaskDetails from "../pages/VolunteerTaskDetails";
-import VolunteerStats from "../pages/VolunteerStats";
-import AdminDashboard from "../pages/AdminDashboard";
-import Reports from "../pages/Reports";
-import RecoveryPlan from "../pages/RecoveryPlan";
-import CommandCenter from "../pages/CommandCenter";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Index from '@/pages/Index';
+import Login from '@/pages/Login';
+import Signup from '@/pages/Signup';
+import Resources from '@/pages/Resources';
+import Map from '@/pages/Map';
+import Alerts from '@/pages/Alerts';
+import Profile from '@/pages/Profile';
+import Settings from '@/pages/Settings';
+import ChatSection from '@/pages/ChatSection';
+import ForgotPassword from '@/pages/ForgotPassword';
+import AdminDashboard from '@/pages/AdminDashboard';
+import VolunteerDashboard from '@/components/dashboards/VolunteerDashboard';
+import NGODashboard from '@/components/dashboards/NGODashboard';
+import GovernmentDashboard from '@/components/dashboards/GovernmentDashboard';
+import VictimDashboard from '@/components/dashboards/VictimDashboard';
+import LandingPage from '@/pages/LandingPage';
+import ResourceDetails from '@/pages/ResourceDetails';
+import CommandCenter from '@/pages/CommandCenter';
+import RecoveryPlan from '@/pages/RecoveryPlan';
+import Reports from '@/pages/Reports';
+import EmergencyPlan from '@/pages/EmergencyPlan';
+import NotFound from '@/pages/NotFound';
 
 const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Index />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/admin-dashboard" element={
-          <AdminRoute>
-            <AdminDashboard />
-          </AdminRoute>
-        } />
-        
-        <Route path="/admin/*" element={
-          <Navigate to="/admin-dashboard" replace />
-        } />
-        
-        <Route path="/login" element={
-          <AuthRoute>
-            <Login />
-          </AuthRoute>
-        } />
-        <Route path="/signup" element={
-          <AuthRoute>
-            <Signup />
-          </AuthRoute>
-        } />
-        <Route path="/forgot-password" element={
-          <AuthRoute>
-            <ForgotPassword />
-          </AuthRoute>
-        } />
-        
-        <Route path="/reports" element={
-          <ProtectedRoute>
-            <Reports />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/resources" element={<ResourceRouteRedirect />} />
-        
-        <Route path="/volunteer-resources" element={
-          <ProtectedRoute>
-            <VolunteerResources />
-          </ProtectedRoute>
-        } />
-        <Route path="/victim-resources" element={
-          <ProtectedRoute>
-            <VictimResources />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/resources/:id" element={
-          <ProtectedRoute>
-            <ResourceDetails />
-          </ProtectedRoute>
-        } />
-        <Route path="/map" element={
-          <ProtectedRoute>
-            <Map />
-          </ProtectedRoute>
-        } />
-        <Route path="/alerts" element={
-          <ProtectedRoute>
-            <Alerts />
-          </ProtectedRoute>
-        } />
-        <Route path="/status/:id" element={
-          <ProtectedRoute>
-            <StatusDetails />
-          </ProtectedRoute>
-        } />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/dashboard" element={<Index />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/map" element={<Map />} />
+        <Route path="/alerts" element={<Alerts />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/chat/:contactId" element={<ChatSection />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/volunteer-dashboard" element={<VolunteerDashboard />} />
+        <Route path="/ngo-dashboard" element={<NGODashboard />} />
+        <Route path="/government-dashboard" element={<GovernmentDashboard />} />
+        <Route path="/victim-dashboard" element={<VictimDashboard />} />
+        <Route path="/resource/:id" element={<ResourceDetails />} />
+        <Route path="/command-center" element={<CommandCenter />} />
+        <Route path="/recovery-plan" element={<RecoveryPlan />} />
+        <Route path="/reports" element={<Reports />} />
         <Route path="/emergency-plan" element={<EmergencyPlan />} />
-        <Route path="/shelter-map" element={
-          <ProtectedRoute>
-            <ShelterMap />
-          </ProtectedRoute>
-        } />
-        <Route path="/chat/:contactId" element={
-          <ProtectedRoute>
-            <ChatSection />
-          </ProtectedRoute>
-        } />
-        <Route path="/volunteer-tasks" element={
-          <ProtectedRoute>
-            <VolunteerTasks />
-          </ProtectedRoute>
-        } />
-        <Route path="/volunteer-tasks/:id" element={
-          <ProtectedRoute>
-            <VolunteerTaskDetails />
-          </ProtectedRoute>
-        } />
-        <Route path="/volunteer-stats" element={
-          <ProtectedRoute>
-            <VolunteerStats />
-          </ProtectedRoute>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
-        <Route path="/settings" element={
-          <ProtectedRoute>
-            <Settings />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/recovery-plan" element={
-          <ProtectedRoute>
-            <RecoveryPlan />
-          </ProtectedRoute>
-        } />
-        <Route path="/command-center" element={
-          <ProtectedRoute>
-            <CommandCenter />
-          </ProtectedRoute>
-        } />
-        
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 };
 
