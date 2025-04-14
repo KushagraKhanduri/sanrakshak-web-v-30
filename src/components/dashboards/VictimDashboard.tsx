@@ -116,7 +116,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {loading ? (
               Array(4).fill(0).map((_, index) => (
                 <div key={`loading-${index}`} className="animate-pulse rounded-2xl p-6 bg-white/5 h-64"></div>
@@ -140,7 +140,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
                 />
               ))
             ) : (
-              <div className="col-span-2 p-6 border border-white/10 rounded-2xl bg-black/40 backdrop-blur-sm text-center">
+              <div className="p-6 border border-white/10 rounded-2xl bg-black/40 backdrop-blur-sm text-center">
                 <p className="text-gray-400">No resources available at the moment.</p>
               </div>
             )}
@@ -163,7 +163,7 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
               </Button>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {myRequests.map(resource => (
                 <ResourceCard
                   key={resource.id}
