@@ -1,7 +1,9 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark';
+// Update the Theme type to include both dark and light
+// This will prevent type errors in components that compare with 'light'
+type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
