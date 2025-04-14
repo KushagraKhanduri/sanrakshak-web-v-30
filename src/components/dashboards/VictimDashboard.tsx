@@ -8,6 +8,7 @@ import AnimatedTransition from '../AnimatedTransition';
 import { Link } from 'react-router-dom';
 import useResourceData from '@/hooks/useResourceData';
 import EmergencyContactsDialog from '../EmergencyContactsDialog';
+import { Button } from '@/components/ui/button';
 
 interface VictimDashboardProps {
   resourceData?: ReturnType<typeof useResourceData>;
@@ -61,9 +62,9 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         <AnimatedTransition className="mb-6" delay={100}>
           <div className="relative overflow-hidden rounded-2xl border border-white/10 p-4 sm:p-6 bg-black/40 backdrop-blur-sm shadow-lg">
             <div className="absolute top-4 right-4 z-10">
-              <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs">
+              <span className="inline-flex items-center rounded-full bg-purple-500/20 px-2.5 py-1 text-xs">
                 <Info size={12} className="mr-1 text-purple-300" />
-                <span>Critical</span>
+                <span className="text-purple-200">Critical</span>
               </span>
             </div>
             
@@ -76,18 +77,25 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
                   Evacuation orders in effect for coastal areas. Shelters are open at Central High School and Community Center.
                 </p>
                 <div className="flex items-center text-xs text-gray-400">
-                  <Info size={12} className="mr-1" />
+                  <Info size={12} className="mr-1 text-purple-300" />
                   <span>Updated 30 minutes ago from National Weather Service</span>
                 </div>
               </div>
               
               <div className="flex space-x-2">
-                <Link to="/emergency-plan" className="px-4 py-2 rounded-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90 transition-all">
-                  Emergency Plan
-                </Link>
-                <Link to="/shelter-map" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-colors">
-                  Shelter Map
-                </Link>
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90 transition-all text-white border-none"
+                >
+                  <Link to="/emergency-plan">Emergency Plan</Link>
+                </Button>
+                <Button
+                  variant="outline"
+                  asChild
+                  className="bg-white/10 hover:bg-white/15 text-white border-white/20"
+                >
+                  <Link to="/shelter-map">Shelter Map</Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -96,10 +104,16 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         <AnimatedTransition className="mb-6" delay={100}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">Available Resources</h2>
-            <Link to="/resources" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
-              <span className="mr-1">View All</span>
-              <ArrowRight size={14} />
-            </Link>
+            <Button
+              variant="ghost"
+              asChild
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Link to="/resources" className="flex items-center">
+                <span className="mr-1">View All</span>
+                <ArrowRight size={14} />
+              </Link>
+            </Button>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -137,10 +151,16 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
           <AnimatedTransition className="mb-6" delay={150}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold">My Requests</h2>
-              <Link to="/victim-resources" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
-                <span className="mr-1">View All</span>
-                <ArrowRight size={14} />
-              </Link>
+              <Button
+                variant="ghost"
+                asChild
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Link to="/victim-resources" className="flex items-center">
+                  <span className="mr-1">View All</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </Button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -166,10 +186,16 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         <AnimatedTransition delay={200}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">Status Updates</h2>
-            <Link to="/alerts" className="flex items-center text-sm text-gray-400 hover:text-white transition-colors">
-              <span className="mr-1">View All</span>
-              <ArrowRight size={14} />
-            </Link>
+            <Button
+              variant="ghost"
+              asChild
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <Link to="/alerts" className="flex items-center">
+                <span className="mr-1">View All</span>
+                <ArrowRight size={14} />
+              </Link>
+            </Button>
           </div>
           
           <div className="space-y-4">
@@ -198,13 +224,14 @@ const VictimDashboard: React.FC<VictimDashboardProps> = ({ resourceData }) => {
         <AnimatedTransition className="mb-6" delay={150}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold">Emergency Contacts</h2>
-            <button 
+            <Button
+              variant="ghost"
               onClick={() => setShowAllContacts(true)}
-              className="flex items-center text-sm text-gray-400 hover:text-white transition-colors"
+              className="text-gray-400 hover:text-white transition-colors flex items-center"
             >
               <span className="mr-1">View All</span>
               <ArrowRight size={14} />
-            </button>
+            </Button>
           </div>
           
           <div className="space-y-4">
