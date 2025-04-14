@@ -72,6 +72,155 @@ function ElegantShape({
     );
 }
 
+function HeroGeometric({
+    badge = "Disaster Relief Platform",
+    title1 = "Connecting Those in Need",
+    title2 = "When Every Second Counts",
+    actionButton,
+}: {
+    badge?: string;
+    title1?: string;
+    title2?: string;
+    actionButton?: React.ReactNode;
+}) {
+    const fadeUpVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 1,
+                delay: 0.5 + i * 0.2,
+                ease: [0.25, 0.4, 0.25, 1],
+            },
+        }),
+    };
+
+    return (
+        <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-purple-500/[0.05] blur-3xl" />
+
+            <div className="absolute inset-0 overflow-hidden">
+                <ElegantShape
+                    delay={0.3}
+                    width={600}
+                    height={140}
+                    rotate={12}
+                    gradient="from-blue-500/[0.15]"
+                    className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
+                />
+
+                <ElegantShape
+                    delay={0.5}
+                    width={500}
+                    height={120}
+                    rotate={-15}
+                    gradient="from-purple-500/[0.15]"
+                    className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+                />
+
+                <ElegantShape
+                    delay={0.4}
+                    width={300}
+                    height={80}
+                    rotate={-8}
+                    gradient="from-sky-500/[0.15]"
+                    className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+                />
+
+                <ElegantShape
+                    delay={0.6}
+                    width={200}
+                    height={60}
+                    rotate={20}
+                    gradient="from-teal-500/[0.15]"
+                    className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+                />
+
+                <ElegantShape
+                    delay={0.7}
+                    width={150}
+                    height={40}
+                    rotate={-25}
+                    gradient="from-orange-500/[0.15]"
+                    className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+                />
+            </div>
+
+            <div className="relative z-10 container mx-auto px-4 md:px-6">
+                <div className="max-w-3xl mx-auto text-center">
+                    <motion.div
+                        custom={0}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 md:mb-12"
+                    >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
+                            <Circle className="h-2 w-2 fill-purple-500/80" />
+                            <span className="text-sm text-white/60 tracking-wide">
+                                {badge}
+                            </span>
+                        </div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
+                            <Circle className="h-2 w-2 fill-purple-500/80" />
+                            <span className="text-sm text-white/60 tracking-wide">
+                                Sanrakshak
+                            </span>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        custom={1}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold mb-6 md:mb-8 tracking-tight">
+                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
+                                {title1}
+                            </span>
+                            <br />
+                            <span
+                                className={cn(
+                                    "bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white/90 to-purple-300"
+                                )}
+                            >
+                                {title2}
+                            </span>
+                        </h1>
+                    </motion.div>
+
+                    <motion.div
+                        custom={2}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
+                            Coordinating disaster victims with NGOs, volunteers, and government organizations for faster, more effective relief operations.
+                        </p>
+                    </motion.div>
+                    
+                    {actionButton && (
+                        <motion.div
+                            custom={3}
+                            variants={fadeUpVariants}
+                            initial="hidden"
+                            animate="visible"
+                            className="flex justify-center"
+                        >
+                            {actionButton}
+                        </motion.div>
+                    )}
+                </div>
+            </div>
+
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
+        </div>
+    );
+}
+
 const LandingPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
@@ -79,19 +228,6 @@ const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { theme } = useTheme();
   
-  const fadeUpVariants = {
-      hidden: { opacity: 0, y: 30 },
-      visible: (i: number) => ({
-          opacity: 1,
-          y: 0,
-          transition: {
-              duration: 1,
-              delay: 0.5 + i * 0.2,
-              ease: [0.25, 0.4, 0.25, 1],
-          },
-      }),
-  };
-
   // Check if user is already logged in and update state
   useEffect(() => {
     const checkAuth = () => {
@@ -154,8 +290,30 @@ const LandingPage = () => {
     navigate('/', { replace: true });
   };
 
-  const handleGetStarted = () => {
-    navigate('/signup', { replace: true });
+  const getActionButton = () => {
+    if (isLoading) {
+      return <div className="h-12 bg-white/10 animate-pulse rounded-lg w-40"></div>;
+    } else if (user) {
+      return (
+        <Link 
+          to="/dashboard" 
+          className="flex items-center gap-2 px-6 py-3 font-medium text-base rounded-full bg-gradient-to-r from-white/90 to-white text-black hover:opacity-90 transition-opacity"
+        >
+          Go to Dashboard
+          <ArrowRight size={16} />
+        </Link>
+      );
+    } else {
+      return (
+        <Link 
+          to="/signup" 
+          className="flex items-center gap-2 px-6 py-3 font-medium text-base rounded-full bg-gradient-to-r from-white/90 to-white text-black hover:opacity-90 transition-opacity"
+        >
+          Get Started
+          <ArrowRight size={16} />
+        </Link>
+      );
+    }
   };
 
   return (
@@ -264,143 +422,9 @@ const LandingPage = () => {
       )}
 
       <main>
-        <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-purple-500/[0.05] blur-3xl" />
-
-            <div className="absolute inset-0 overflow-hidden">
-                <ElegantShape
-                    delay={0.3}
-                    width={600}
-                    height={140}
-                    rotate={12}
-                    gradient="from-blue-500/[0.15]"
-                    className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
-                />
-
-                <ElegantShape
-                    delay={0.5}
-                    width={500}
-                    height={120}
-                    rotate={-15}
-                    gradient="from-purple-500/[0.15]"
-                    className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
-                />
-
-                <ElegantShape
-                    delay={0.4}
-                    width={300}
-                    height={80}
-                    rotate={-8}
-                    gradient="from-sky-500/[0.15]"
-                    className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
-                />
-
-                <ElegantShape
-                    delay={0.6}
-                    width={200}
-                    height={60}
-                    rotate={20}
-                    gradient="from-teal-500/[0.15]"
-                    className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
-                />
-
-                <ElegantShape
-                    delay={0.7}
-                    width={150}
-                    height={40}
-                    rotate={-25}
-                    gradient="from-orange-500/[0.15]"
-                    className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
-                />
-            </div>
-
-            <div className="relative z-10 container mx-auto px-4 md:px-6">
-                <div className="max-w-3xl mx-auto text-center">
-                    <motion.div
-                        custom={0}
-                        variants={fadeUpVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 md:mb-12"
-                    >
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
-                            <Circle className="h-2 w-2 fill-purple-500/80" />
-                            <span className="text-sm text-white/60 tracking-wide">
-                                Disaster Relief Platform
-                            </span>
-                        </div>
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
-                            <Circle className="h-2 w-2 fill-purple-500/80" />
-                            <span className="text-sm text-white/60 tracking-wide">
-                                Sanrakshak
-                            </span>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        custom={1}
-                        variants={fadeUpVariants}
-                        initial="hidden"
-                        animate="visible"
-                    >
-                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold mb-6 md:mb-8 tracking-tight">
-                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
-                                Connecting Those in Need
-                            </span>
-                            <br />
-                            <span
-                                className={cn(
-                                    "bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white/90 to-purple-300"
-                                )}
-                            >
-                                When Every Second Counts
-                            </span>
-                        </h1>
-                    </motion.div>
-
-                    <motion.div
-                        custom={2}
-                        variants={fadeUpVariants}
-                        initial="hidden"
-                        animate="visible"
-                    >
-                        <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
-                            Coordinating disaster victims with NGOs, volunteers, and government organizations for faster, more effective relief operations.
-                        </p>
-                    </motion.div>
-                    
-                    <motion.div
-                        custom={3}
-                        variants={fadeUpVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="flex justify-center"
-                    >
-                        {isLoading ? (
-                          <div className="h-12 bg-white/10 animate-pulse rounded-lg w-40"></div>
-                        ) : user ? (
-                          <Link 
-                            to="/dashboard" 
-                            className="flex items-center gap-2 px-6 py-3 font-medium text-base rounded-full bg-gradient-to-r from-white/90 to-white text-black hover:opacity-90 transition-opacity"
-                          >
-                            Go to Dashboard
-                            <ArrowRight size={16} />
-                          </Link>
-                        ) : (
-                          <Link 
-                            to="/signup" 
-                            className="flex items-center gap-2 px-6 py-3 font-medium text-base rounded-full bg-gradient-to-r from-white/90 to-white text-black hover:opacity-90 transition-opacity"
-                          >
-                            Get Started
-                            <ArrowRight size={16} />
-                          </Link>
-                        )}
-                    </motion.div>
-                </div>
-            </div>
-
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
-        </div>
+        <HeroGeometric 
+          actionButton={getActionButton()}
+        />
       </main>
     </div>
   );
