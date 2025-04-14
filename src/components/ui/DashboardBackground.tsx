@@ -1,7 +1,4 @@
 
-
-"use client";
-
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -71,9 +68,9 @@ export function ElegantShape({
     );
 }
 
-export function DashboardBackground() {
+export function PageBackground({ children }: { children: React.ReactNode }) {
     return (
-        <div className="fixed inset-0 -z-10 overflow-hidden bg-[#030303]">
+        <div className="relative min-h-screen w-full overflow-hidden bg-[#030303]">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-purple-500/[0.05] blur-3xl" />
 
             <div className="absolute inset-0 overflow-hidden">
@@ -122,9 +119,12 @@ export function DashboardBackground() {
                     className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
                 />
             </div>
-            
+
             <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
+            
+            <div className="relative z-10 min-h-screen">
+                {children}
+            </div>
         </div>
     );
 }
-
