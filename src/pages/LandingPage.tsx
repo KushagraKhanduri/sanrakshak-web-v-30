@@ -1,17 +1,96 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, CheckCircle, MapPin, Menu, X, AlertTriangle } from 'lucide-react';
-import AnimatedTransition from '@/components/AnimatedTransition';
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { Circle, Shield, Menu, X, ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useTheme } from '../context/ThemeProvider';
 
+function ElegantShape({
+    className,
+    delay = 0,
+    width = 400,
+    height = 100,
+    rotate = 0,
+    gradient = "from-white/[0.08]",
+}: {
+    className?: string;
+    delay?: number;
+    width?: number;
+    height?: number;
+    rotate?: number;
+    gradient?: string;
+}) {
+    return (
+        <motion.div
+            initial={{
+                opacity: 0,
+                y: -150,
+                rotate: rotate - 15,
+            }}
+            animate={{
+                opacity: 1,
+                y: 0,
+                rotate: rotate,
+            }}
+            transition={{
+                duration: 2.4,
+                delay,
+                ease: [0.23, 0.86, 0.39, 0.96],
+                opacity: { duration: 1.2 },
+            }}
+            className={cn("absolute", className)}
+        >
+            <motion.div
+                animate={{
+                    y: [0, 15, 0],
+                }}
+                transition={{
+                    duration: 12,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "easeInOut",
+                }}
+                style={{
+                    width,
+                    height,
+                }}
+                className="relative"
+            >
+                <div
+                    className={cn(
+                        "absolute inset-0 rounded-full",
+                        "bg-gradient-to-r to-transparent",
+                        gradient,
+                        "backdrop-blur-[2px] border-2 border-white/[0.15]",
+                        "shadow-[0_8px_32px_0_rgba(255,255,255,0.1)]",
+                        "after:absolute after:inset-0 after:rounded-full",
+                        "after:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]"
+                    )}
+                />
+            </motion.div>
+        </motion.div>
+    );
+}
+
 const LandingPage = () => {
-  const { theme } = useTheme();
-  const isLight = theme === 'light';
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { theme } = useTheme();
+  
+  const fadeUpVariants = {
+      hidden: { opacity: 0, y: 30 },
+      visible: (i: number) => ({
+          opacity: 1,
+          y: 0,
+          transition: {
+              duration: 1,
+              delay: 0.5 + i * 0.2,
+              ease: [0.25, 0.4, 0.25, 1],
+          },
+      }),
+  };
 
   // Check if user is already logged in and update state
   useEffect(() => {
@@ -76,39 +155,16 @@ const LandingPage = () => {
   };
 
   const handleGetStarted = () => {
-    if (user) {
-      navigate('/dashboard', { replace: true });
-    } else {
-      navigate('/signup', { replace: true });
-    }
+    navigate('/signup', { replace: true });
   };
 
   return (
-    <div className={`min-h-screen bg-black text-foreground w-full`}>
-      <header className={`py-6 px-6 bg-black w-full`}>
+    <div className="min-h-screen overflow-hidden">
+      <header className="fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300 bg-transparent">
         <div className="w-full px-4 sm:px-6 md:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <div className="font-bold text-2xl">Sanrakshak</div>
-            </div>
-            
-            <div className="hidden md:flex items-center space-x-6">
-              {user && (
-                <>
-                  <Link to="/dashboard" className="text-sm font-medium hover:opacity-80 transition-opacity">
-                    Dashboard
-                  </Link>
-                  <Link to="/resources" className="text-sm font-medium hover:opacity-80 transition-opacity">
-                    Resources
-                  </Link>
-                  <Link to="/map" className="text-sm font-medium hover:opacity-80 transition-opacity">
-                    Map
-                  </Link>
-                  <Link to="/alerts" className="text-sm font-medium hover:opacity-80 transition-opacity">
-                    Alerts
-                  </Link>
-                </>
-              )}
+              <div className="font-bold text-2xl text-white">Sanrakshak</div>
             </div>
             
             <div className="flex items-center space-x-4">
@@ -117,14 +173,15 @@ const LandingPage = () => {
               ) : user ? (
                 <>
                   <Link 
-                    to="/profile" 
-                    className="text-sm font-medium py-1.5 px-3 rounded-lg hover:bg-white/5 transition-colors"
+                    to="/dashboard" 
+                    className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium bg-white text-black hover:bg-white/90 transition-colors"
                   >
-                    Profile
+                    Go to Dashboard
+                    <ArrowRight size={16} className="ml-1.5" />
                   </Link>
                   <button 
                     onClick={handleLogout}
-                    className="text-sm font-medium py-1.5 px-3 rounded-lg bg-white text-black hover:bg-white/90 transition-colors"
+                    className="text-sm font-medium py-1.5 px-3 rounded-lg hover:bg-white/5 transition-colors text-white"
                   >
                     Sign out
                   </button>
@@ -133,7 +190,7 @@ const LandingPage = () => {
                 <>
                   <Link 
                     to="/login" 
-                    className="text-sm font-medium py-1.5 px-3 rounded-lg hover:bg-white/5 transition-colors"
+                    className="text-sm font-medium py-1.5 px-3 rounded-lg hover:bg-white/5 transition-colors text-white"
                   >
                     Sign in
                   </Link>
@@ -151,7 +208,7 @@ const LandingPage = () => {
                 onClick={toggleMenu}
                 aria-label="Menu"
               >
-                {menuOpen ? <X size={20} /> : <Menu size={20} />}
+                {menuOpen ? <X size={20} className="text-white" /> : <Menu size={20} className="text-white" />}
               </button>
             </div>
           </div>
@@ -165,42 +222,21 @@ const LandingPage = () => {
               <>
                 <Link 
                   to="/dashboard" 
-                  className="text-2xl font-medium" 
+                  className="text-2xl font-medium text-white" 
                   onClick={toggleMenu}
                 >
                   Dashboard
                 </Link>
                 <Link 
-                  to="/resources" 
-                  className="text-2xl font-medium" 
-                  onClick={toggleMenu}
-                >
-                  Resources
-                </Link>
-                <Link 
-                  to="/map" 
-                  className="text-2xl font-medium" 
-                  onClick={toggleMenu}
-                >
-                  Map
-                </Link>
-                <Link 
-                  to="/alerts" 
-                  className="text-2xl font-medium" 
-                  onClick={toggleMenu}
-                >
-                  Alerts
-                </Link>
-                <Link 
                   to="/profile" 
-                  className="text-2xl font-medium" 
+                  className="text-2xl font-medium text-white" 
                   onClick={toggleMenu}
                 >
                   Profile
                 </Link>
                 <button 
                   onClick={handleLogout} 
-                  className="text-2xl font-medium"
+                  className="text-2xl font-medium text-white"
                 >
                   Sign out
                 </button>
@@ -209,7 +245,7 @@ const LandingPage = () => {
               <div className="flex flex-col items-center space-y-4 mt-6">
                 <Link 
                   to="/login" 
-                  className="text-xl font-medium py-2 px-6 rounded-lg hover:bg-white/5 transition-colors"
+                  className="text-xl font-medium py-2 px-6 rounded-lg hover:bg-white/5 transition-colors text-white"
                   onClick={toggleMenu}
                 >
                   Sign in
@@ -227,117 +263,145 @@ const LandingPage = () => {
         </div>
       )}
 
-      <main className="w-full">
-        <section className="py-20 md:py-28 w-full">
-          <div className="w-full px-4 sm:px-6 md:px-8">
-            <AnimatedTransition>
-              <div className="max-w-4xl mx-auto text-center">
-                <div className="inline-flex items-center px-4 py-2 mb-6 rounded-full bg-primary/10 text-primary-foreground text-sm md:text-base font-medium">
-                  <span>Emergency Response Platform</span>
-                </div>
-                
-                <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                  Coordinate Relief Efforts in Disaster Situations
-                </h1>
-                
-                <p className="text-lg md:text-xl mb-8 text-muted-foreground">
-                  Connect those in need with volunteers, NGOs, and government resources during emergencies.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  {isLoading ? (
-                    <div className="h-12 bg-white/10 animate-pulse rounded-lg w-40"></div>
-                  ) : user ? (
-                    <Link 
-                      to="/dashboard" 
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium bg-white text-black hover:bg-white/90 transition-colors"
-                    >
-                      Go to Dashboard
-                      <ArrowRight size={18} className="ml-2" />
-                    </Link>
-                  ) : (
-                    <button 
-                      onClick={handleGetStarted}
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium bg-white text-black hover:bg-white/90 transition-colors"
-                    >
-                      Get Started
-                      <ArrowRight size={18} className="ml-2" />
-                    </button>
-                  )}
-                  
-                  <Link 
-                    to="/emergency-plan" 
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-medium bg-transparent border border-white/20 hover:bg-white/5 transition-colors"
-                  >
-                    Emergency Resources
-                  </Link>
-                </div>
-              </div>
-            </AnimatedTransition>
-          </div>
-        </section>
-        
-        <section className="py-16 bg-black/40 w-full">
-          <div className="w-full px-4 sm:px-6 md:px-8">
-            <AnimatedTransition>
-              <div className="max-w-4xl mx-auto text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">How It Works</h2>
-                <p className="text-muted-foreground">
-                  Sanrakshak connects people in need with those who can help during emergencies
-                </p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="p-6 rounded-xl bg-black/20 border border-white/10">
-                  <div className="w-12 h-12 mb-4 rounded-full flex items-center justify-center bg-white/10">
-                    <AlertTriangle size={20} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Report Needs</h3>
-                  <p className="text-muted-foreground">
-                    Those affected by disasters can quickly request assistance for food, water, shelter or medical aid.
-                  </p>
-                </div>
-                
-                <div className="p-6 rounded-xl bg-black/20 border border-white/10">
-                  <div className="w-12 h-12 mb-4 rounded-full flex items-center justify-center bg-white/10">
-                    <CheckCircle size={20} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Coordinate Response</h3>
-                  <p className="text-muted-foreground">
-                    Volunteers, NGOs and government agencies can see real-time needs and coordinate effective responses.
-                  </p>
-                </div>
-                
-                <div className="p-6 rounded-xl bg-black/20 border border-white/10">
-                  <div className="w-12 h-12 mb-4 rounded-full flex items-center justify-center bg-white/10">
-                    <MapPin size={20} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Track Progress</h3>
-                  <p className="text-muted-foreground">
-                    Monitor the status of assistance requests and relief efforts in real-time.
-                  </p>
-                </div>
-              </div>
-            </AnimatedTransition>
-          </div>
-        </section>
-      </main>
-      
-      <footer className="py-8 bg-black border-t border-white/10 w-full">
-        <div className="w-full px-4 sm:px-6 md:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <div className="text-sm text-muted-foreground">
-                Sanrakshak
-              </div>
+      <main>
+        <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-purple-500/[0.05] blur-3xl" />
+
+            <div className="absolute inset-0 overflow-hidden">
+                <ElegantShape
+                    delay={0.3}
+                    width={600}
+                    height={140}
+                    rotate={12}
+                    gradient="from-blue-500/[0.15]"
+                    className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
+                />
+
+                <ElegantShape
+                    delay={0.5}
+                    width={500}
+                    height={120}
+                    rotate={-15}
+                    gradient="from-purple-500/[0.15]"
+                    className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+                />
+
+                <ElegantShape
+                    delay={0.4}
+                    width={300}
+                    height={80}
+                    rotate={-8}
+                    gradient="from-sky-500/[0.15]"
+                    className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+                />
+
+                <ElegantShape
+                    delay={0.6}
+                    width={200}
+                    height={60}
+                    rotate={20}
+                    gradient="from-teal-500/[0.15]"
+                    className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+                />
+
+                <ElegantShape
+                    delay={0.7}
+                    width={150}
+                    height={40}
+                    rotate={-25}
+                    gradient="from-orange-500/[0.15]"
+                    className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+                />
             </div>
-            
-            <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Sanrakshak. All rights reserved.
+
+            <div className="relative z-10 container mx-auto px-4 md:px-6">
+                <div className="max-w-3xl mx-auto text-center">
+                    <motion.div
+                        custom={0}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8 md:mb-12"
+                    >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
+                            <Circle className="h-2 w-2 fill-purple-500/80" />
+                            <span className="text-sm text-white/60 tracking-wide">
+                                Disaster Relief Platform
+                            </span>
+                        </div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08]">
+                            <Circle className="h-2 w-2 fill-purple-500/80" />
+                            <span className="text-sm text-white/60 tracking-wide">
+                                Sanrakshak
+                            </span>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        custom={1}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold mb-6 md:mb-8 tracking-tight">
+                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
+                                Connecting Those in Need
+                            </span>
+                            <br />
+                            <span
+                                className={cn(
+                                    "bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-white/90 to-purple-300"
+                                )}
+                            >
+                                When Every Second Counts
+                            </span>
+                        </h1>
+                    </motion.div>
+
+                    <motion.div
+                        custom={2}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        <p className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
+                            Coordinating disaster victims with NGOs, volunteers, and government organizations for faster, more effective relief operations.
+                        </p>
+                    </motion.div>
+                    
+                    <motion.div
+                        custom={3}
+                        variants={fadeUpVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="flex justify-center"
+                    >
+                        {isLoading ? (
+                          <div className="h-12 bg-white/10 animate-pulse rounded-lg w-40"></div>
+                        ) : user ? (
+                          <Link 
+                            to="/dashboard" 
+                            className="flex items-center gap-2 px-6 py-3 font-medium text-base rounded-full bg-gradient-to-r from-white/90 to-white text-black hover:opacity-90 transition-opacity"
+                          >
+                            Go to Dashboard
+                            <ArrowRight size={16} />
+                          </Link>
+                        ) : (
+                          <Link 
+                            to="/signup" 
+                            className="flex items-center gap-2 px-6 py-3 font-medium text-base rounded-full bg-gradient-to-r from-white/90 to-white text-black hover:opacity-90 transition-opacity"
+                          >
+                            Get Started
+                            <ArrowRight size={16} />
+                          </Link>
+                        )}
+                    </motion.div>
+                </div>
             </div>
-          </div>
+
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80 pointer-events-none" />
         </div>
-      </footer>
+      </main>
     </div>
   );
 };
