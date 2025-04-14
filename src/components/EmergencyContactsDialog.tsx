@@ -81,7 +81,7 @@ const EmergencyContactsDialog: React.FC<EmergencyContactsDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className={cn(
-        "sm:max-w-[500px] max-h-[90vh] overflow-hidden fixed rounded-2xl relative z-50",
+        "sm:max-w-[400px] max-h-[90vh] overflow-hidden fixed rounded-2xl relative z-50", // Reduced from 500px to 400px
         isLight ? "bg-white" : "bg-black/30 backdrop-blur-sm border-white/10"
       )}>
         <DialogHeader>
@@ -111,3 +111,4 @@ const EmergencyContactsDialog: React.FC<EmergencyContactsDialogProps> = ({
 };
 
 export default EmergencyContactsDialog;
+
