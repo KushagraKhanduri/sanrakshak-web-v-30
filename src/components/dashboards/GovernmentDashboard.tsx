@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Info } from 'lucide-react';
 import ResourceCard from '../ResourceCard';
 import StatusUpdate from '../StatusUpdate';
 import AnimatedTransition from '../AnimatedTransition';
