@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark';
 
 interface ThemeContextType {
   theme: Theme;
@@ -11,50 +11,18 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Change default theme to 'dark'
+  // Hardcode to dark theme
   const [theme, setTheme] = useState<Theme>('dark');
 
   useEffect(() => {
-    // Check if user has saved theme preference
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme === 'light' || storedTheme === 'dark') {
-      setTheme(storedTheme);
-    } else {
-      // If no preference, default to dark
-      setTheme('dark');
-      localStorage.setItem('theme', 'dark');
-    }
-
-    // Check if user has settings with darkMode preference
-    const storedUser = localStorage.getItem('authUser');
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        const settingsKey = `settings_${user.id}`;
-        const storedSettings = localStorage.getItem(settingsKey);
-        
-        if (storedSettings) {
-          const settings = JSON.parse(storedSettings);
-          if (settings.darkMode !== undefined) {
-            setTheme(settings.darkMode ? 'dark' : 'light');
-          }
-        }
-      } catch (error) {
-        console.error("Error parsing user data or settings:", error);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    // Update document with current theme class
+    // Always set to dark mode
     document.documentElement.classList.remove('light-mode', 'dark-mode');
-    document.documentElement.classList.add(`${theme}-mode`);
+    document.documentElement.classList.add('dark-mode');
     document.body.classList.remove('light-mode', 'dark-mode');
-    document.body.classList.add(`${theme}-mode`);
+    document.body.classList.add('dark-mode');
     
-    // Save theme preference to localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

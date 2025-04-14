@@ -1,16 +1,13 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import AnimatedTransition from '@/components/AnimatedTransition';
-import { Bell, Moon, Volume2, MapPin, Shield, AlertTriangle, Save, User } from 'lucide-react';
+import { Bell, Volume2, MapPin, Shield, AlertTriangle, Save, User } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import { useTheme } from '../context/ThemeProvider';
 import { Switch } from "@/components/ui/switch";
 
 interface SettingsState {
   notifications: boolean;
-  darkMode: boolean;
   sound: boolean;
   location: boolean;
   dataProtection: boolean;
@@ -23,7 +20,6 @@ const Settings = () => {
   const [user, setUser] = useState<any>(null);
   const [settings, setSettings] = useState<SettingsState>({
     notifications: true,
-    darkMode: true,
     sound: true,
     location: true,
     dataProtection: true,
@@ -34,7 +30,6 @@ const Settings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme();
   
   useEffect(() => {
     // Check if user is logged in
@@ -98,28 +93,13 @@ const Settings = () => {
     navigate('/login');
   };
   
-  // Update theme when settings darkMode changes
-  useEffect(() => {
-    if (!isLoading && user) {
-      setTheme(settings.darkMode ? 'dark' : 'light');
-    }
-  }, [settings.darkMode, setTheme, isLoading, user]);
-  
+
   const handleSettingToggle = (setting: keyof SettingsState) => {
     if (typeof settings[setting] === 'boolean') {
-      setSettings(prev => {
-        const newSettings = {
-          ...prev,
-          [setting]: !prev[setting]
-        };
-        
-        // If toggling dark mode, apply it immediately
-        if (setting === 'darkMode') {
-          setTheme(newSettings.darkMode ? 'dark' : 'light');
-        }
-        
-        return newSettings;
-      });
+      setSettings(prev => ({
+        ...prev,
+        [setting]: !prev[setting]
+      }));
     }
   };
   
@@ -140,9 +120,6 @@ const Settings = () => {
   const saveSettings = () => {
     if (user) {
       localStorage.setItem(`settings_${user.id}`, JSON.stringify(settings));
-      
-      // Apply theme based on darkMode setting
-      setTheme(settings.darkMode ? 'dark' : 'light');
       
       toast({
         title: "Settings Saved",
@@ -342,20 +319,6 @@ const Settings = () => {
                     <Switch
                       checked={settings.dataProtection}
                       onCheckedChange={() => handleSettingToggle('dataProtection')}
-                    />
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <Moon size={18} className="mr-3 text-muted-foreground" />
-                      <div>
-                        <p className="font-medium">Dark Mode</p>
-                        <p className="text-sm text-muted-foreground">Toggle between light and dark theme</p>
-                      </div>
-                    </div>
-                    <Switch
-                      checked={settings.darkMode}
-                      onCheckedChange={() => handleSettingToggle('darkMode')}
                     />
                   </div>
                 </div>
