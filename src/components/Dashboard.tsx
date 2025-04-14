@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
         <div className="relative overflow-hidden glass-dark rounded-xl border border-white/10 p-4 sm:p-6 bg-gradient-to-r from-black/50 via-black/30 to-black/50 backdrop-blur-sm">
           <div className="absolute top-4 right-4 z-10">
             <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs">
-              <Zap size={12} className="mr-1" />
+              <Zap size={12} className="mr-1 text-purple-300" />
               <span>Critical</span>
             </span>
           </div>
@@ -103,7 +103,7 @@ const Dashboard: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between">
             <div className="mb-4 sm:mb-0 sm:mr-6">
               <div className="mb-2">
-                <h2 className="text-xl font-semibold">Hurricane Warning: Category 3</h2>
+                <h2 className="text-xl font-semibold text-white">Hurricane Warning: Category 3</h2>
               </div>
               <p className="text-gray-300 text-sm mb-3">
                 Evacuation orders in effect for coastal areas. Shelters are open at Central High School and Community Center.
@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
             </div>
             
             <div className="flex space-x-2">
-              <Link to="/emergency-plan" className="px-4 py-2 rounded-full text-sm bg-white text-black hover:bg-white/90 transition-colors">
+              <Link to="/emergency-plan" className="px-4 py-2 rounded-full text-sm bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:bg-white/90 transition-colors">
                 Emergency Plan
               </Link>
               <Link to="/shelter-map" className="px-4 py-2 rounded-full text-sm bg-white/10 hover:bg-white/15 transition-colors">
